@@ -2,7 +2,7 @@
 
 require 'dry/equalizer'
 
-describe Transproc::ClassTransformations do
+RSpec.describe Dry::Transformer::ClassTransformations do
   describe '.constructor_inject' do
     let(:klass) do
       Struct.new(:name, :age) { include Dry::Equalizer.new(:name, :age) }

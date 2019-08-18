@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Transproc::Coercions do
+RSpec.describe Dry::Transformer::Coercions do
   describe '.identity' do
     let(:fn) { described_class.t(:identity) }
 
@@ -83,13 +83,13 @@ describe Transproc::Coercions do
   describe '.to_boolean' do
     subject(:coercer) { described_class.t(:to_boolean) }
 
-    Transproc::Coercions::TRUE_VALUES.each do |value|
+    Dry::Transformer::Coercions::TRUE_VALUES.each do |value|
       it "turns #{value.inspect} to true" do
         expect(coercer[value]).to be(true)
       end
     end
 
-    Transproc::Coercions::FALSE_VALUES.each do |value|
+    Dry::Transformer::Coercions::FALSE_VALUES.each do |value|
       it "turns #{value.inspect} to false" do
         expect(coercer[value]).to be(false)
       end

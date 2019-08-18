@@ -2,7 +2,7 @@
 
 require 'forwardable'
 
-describe Transproc::ArrayTransformations do
+RSpec.describe Dry::Transformer::ArrayTransformations do
   describe '.combine' do
     subject(:result) { described_class.t(:combine, mappings)[input] }
 

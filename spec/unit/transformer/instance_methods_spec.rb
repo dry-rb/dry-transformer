@@ -1,6 +1,6 @@
-RSpec.describe Transproc::Transformer, 'instance methods' do
+RSpec.describe Dry::Transformer, 'instance methods' do
   subject(:transformer) do
-    Class.new(Transproc::Transformer[registry]) do
+    Class.new(Dry::Transformer[registry]) do
       define! do
         map_array(&:capitalize)
       end
@@ -13,9 +13,9 @@ RSpec.describe Transproc::Transformer, 'instance methods' do
 
   let(:registry) do
     Module.new do
-      extend Transproc::Registry
+      extend Dry::Transformer::Registry
 
-      import Transproc::ArrayTransformations
+      import Dry::Transformer::ArrayTransformations
     end
   end
 

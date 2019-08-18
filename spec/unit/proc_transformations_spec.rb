@@ -2,7 +2,7 @@
 
 require 'ostruct'
 
-describe Transproc::ProcTransformations do
+RSpec.describe Dry::Transformer::ProcTransformations do
   describe '.bind' do
     let(:fn) { described_class.t(:bind, binding, proc) }
     let(:binding) { OpenStruct.new(prefix: prefix) }

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-describe Transproc::FunctionNotFoundError do
+RSpec.describe Dry::Transformer::FunctionNotFoundError do
   it 'complains that the function not registered' do
-    Foo = Module.new { extend Transproc::Registry }
+    Foo = Module.new { extend Dry::Transformer::Registry }
 
     expect { Foo[:foo] }.to raise_error do |error|
       expect(error).to be_kind_of described_class

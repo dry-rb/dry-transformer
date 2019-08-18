@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-describe Transproc::Composer do
+RSpec.describe Dry::Transformer::Composer do
   before do
     module Foo
-      extend Transproc::Registry
-      import Transproc::ArrayTransformations
-      import Transproc::HashTransformations
-      import Transproc::Coercions
+      extend Dry::Transformer::Registry
+      import Dry::Transformer::ArrayTransformations
+      import Dry::Transformer::HashTransformations
+      import Dry::Transformer::Coercions
     end
   end
 
   subject(:object) do
     Class.new do
-      include Transproc::Composer
+      include Dry::Transformer::Composer
 
       def fn
         compose do |fns|

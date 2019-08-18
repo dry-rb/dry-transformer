@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Transproc::Store do
+RSpec.describe Dry::Transformer::Store do
   let(:store) { described_class.new methods      }
   let(:methods) { { foo: instance_double(Proc) } }
 
@@ -88,7 +88,7 @@ describe Transproc::Store do
       end
 
       module Qux
-        extend Transproc::Registry
+        extend Dry::Transformer::Registry
 
         import Bar
         import Baz
@@ -185,7 +185,7 @@ describe Transproc::Store do
         let(:value) { :qux }
       end
 
-      it 'skips Transproc::Registry singleton methods' do
+      it 'skips Dry::Transformer::Registry singleton methods' do
         pending "this fails for some reason" if RUBY_ENGINE == "jruby"
         expect(subject.methods.keys).to contain_exactly(:foo, :bar, :baz, :qux)
       end
@@ -195,4 +195,4 @@ describe Transproc::Store do
       %w(Bar Baz Qux).each { |name| Object.send :remove_const, name }
     end
   end # describe #import
-end # describe Transproc::Store
+end # describe Dry::Transformer::Store

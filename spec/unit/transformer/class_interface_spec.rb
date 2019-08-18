@@ -3,16 +3,16 @@
 require 'ostruct'
 require 'dry/equalizer'
 
-describe Transproc::Transformer do
-  let(:container) { Module.new { extend Transproc::Registry } }
-  let(:klass) { Transproc::Transformer[container] }
+RSpec.describe Dry::Transformer do
+  let(:container) { Module.new { extend Dry::Transformer::Registry } }
+  let(:klass) { Dry::Transformer[container] }
   let(:transformer) { klass.new }
 
   describe '.import' do
     it 'allows importing functions into an auto-configured registry' do
-      klass = Class.new(Transproc::Transformer) do
-        import Transproc::ArrayTransformations
-        import Transproc::Coercions
+      klass = Class.new(Dry::Transformer::Pipe) do
+        import Dry::Transformer::ArrayTransformations
+        import Dry::Transformer::Coercions
 
         define! do
           map_array(&:to_symbol)
@@ -27,9 +27,9 @@ describe Transproc::Transformer do
 
   describe '.new' do
     it 'supports arguments' do
-      klass = Class.new(Transproc::Transformer) do
-        import Transproc::ArrayTransformations
-        import Transproc::Coercions
+      klass = Class.new(Dry::Transformer::Pipe) do
+        import Dry::Transformer::ArrayTransformations
+        import Dry::Transformer::Coercions
 
         define! do
           map_array(&:to_symbol)
@@ -69,7 +69,7 @@ describe Transproc::Transformer do
   describe 'inheritance' do
     let(:container) do
       Module.new do
-        extend Transproc::Registry
+        extend Dry::Transformer::Registry
 
         def self.arbitrary(value, fn)
           fn[value]
@@ -78,7 +78,7 @@ describe Transproc::Transformer do
     end
 
     let(:superclass) do
-      Class.new(Transproc::Transformer[container]) do
+      Class.new(Dry::Transformer[container]) do
         define! do
           arbitrary ->(v) { v + 1 }
         end
@@ -106,7 +106,7 @@ describe Transproc::Transformer do
   describe '.[]' do
     subject(:subclass) { klass[another_container] }
 
-    let(:another_container) { double('Transproc') }
+    let(:another_container) { double('Dry::Transformer') }
 
     it 'sets a container' do
       expect(subclass.container).to be(another_container)
@@ -117,7 +117,7 @@ describe Transproc::Transformer do
     end
 
     it 'creates a subclass of Transformer' do
-      expect(subclass).to be < Transproc::Transformer
+      expect(subclass).to be < Dry::Transformer::Pipe
     end
 
     it 'does not change super class' do
@@ -130,11 +130,13 @@ describe Transproc::Transformer do
 
     context 'with predefined transformer' do
       let(:klass) do
-        Class.new(Transproc::Transformer[container]) do
-          container.import Transproc::Coercions
-          container.import Transproc::HashTransformations
+        Class.new(Dry::Transformer[container]) do
+          container.import Dry::Transformer::Coercions
+          container.import Dry::Transformer::HashTransformations
 
-          map_value :attr, t(:to_symbol)
+          define! do
+            map_value :attr, t(:to_symbol)
+          end
         end
       end
 
@@ -144,12 +146,12 @@ describe Transproc::Transformer do
     end
   end
 
-  describe '.define' do
+  describe '.define!' do
     let(:container) do
       Module.new do
-        extend Transproc::Registry
+        extend Dry::Transformer::Registry
 
-        import Transproc::HashTransformations
+        import Dry::Transformer::HashTransformations
 
         def self.to_symbol(v)
           v.to_sym
@@ -157,26 +159,18 @@ describe Transproc::Transformer do
       end
     end
 
-    let(:klass) { Transproc::Transformer[container] }
+    let(:klass) { Dry::Transformer[container] }
 
     it 'defines anonymous transproc' do
-      transproc = klass.define do
+      transproc = klass.define! do
         map_value(:attr, t(:to_symbol))
       end
 
-      expect(transproc[attr: 'abc']).to eq(attr: :abc)
-    end
-
-    it 'has .build alias' do
-      transproc = klass.build do
-        map_value(:attr, t(:to_symbol))
-      end
-
-      expect(transproc[attr: 'abc']).to eq(attr: :abc)
+      expect(transproc.new.transproc[attr: 'abc']).to eq(attr: :abc)
     end
 
     it 'does not affect original transformer' do
-      klass.define do
+      Class.new(klass).define! do
         map_value(:attr, :to_sym.to_proc)
       end
 
@@ -186,7 +180,7 @@ describe Transproc::Transformer do
     context 'with custom container' do
       let(:container) do
         Module.new do
-          extend Transproc::Registry
+          extend Dry::Transformer::Registry
 
           def self.arbitrary(value, fn)
             fn[value]
@@ -223,14 +217,14 @@ describe Transproc::Transformer do
   end
 
   describe '.t' do
-    subject(:klass) { Transproc::Transformer[container] }
+    subject(:klass) { Dry::Transformer[container] }
 
     let(:container) do
       Module.new do
-        extend Transproc::Registry
+        extend Dry::Transformer::Registry
 
-        import Transproc::HashTransformations
-        import Transproc::Conditional
+        import Dry::Transformer::HashTransformations
+        import Dry::Transformer::Conditional
 
         def self.custom(value, suffix)
           value + suffix
@@ -243,7 +237,7 @@ describe Transproc::Transformer do
     end
 
     it 'is useful in DSL' do
-      transproc = Class.new(klass) do
+      transproc = Class.new(klass).define! do
         map_value :a, t(:custom, '_bar')
       end.new
 
@@ -251,7 +245,7 @@ describe Transproc::Transformer do
     end
 
     it 'works in nested block' do
-      transproc = Class.new(klass) do
+      transproc = Class.new(klass).define! do
         map_values do
           is String, t(:custom, '_bar')
         end
@@ -261,41 +255,31 @@ describe Transproc::Transformer do
     end
   end
 
-  describe '.method_missing' do
-    it 'responds to missing when there is a corresponding function' do
-      container.import Transproc::HashTransformations
-
-      expect(klass.method(:map_values)).to be_a(Method)
-    end
-
-    it 'raises when there is no corresponding function or instance method' do
-      expect { klass.not_here }.to raise_error(NoMethodError, /not_here/)
-    end
-  end
-
   describe '#call' do
     let(:container) do
       Module.new do
-        extend Transproc::Registry
+        extend Dry::Transformer::Registry
 
-        import Transproc::HashTransformations
-        import Transproc::ArrayTransformations
-        import Transproc::ClassTransformations
+        import Dry::Transformer::HashTransformations
+        import Dry::Transformer::ArrayTransformations
+        import Dry::Transformer::ClassTransformations
       end
     end
 
     let(:klass) do
-      Class.new(Transproc::Transformer[container]) do
-        map_array do
-          symbolize_keys
-          rename_keys user_name: :name
-          nest :address, [:city, :street, :zipcode]
+      Class.new(Dry::Transformer[container]) do
+        define! do
+          map_array do
+            symbolize_keys
+            rename_keys user_name: :name
+            nest :address, [:city, :street, :zipcode]
 
-          map_value :address do
-            constructor_inject Test::Address
+            map_value :address do
+              constructor_inject Test::Address
+            end
+
+            constructor_inject Test::User
           end
-
-          constructor_inject Test::User
         end
       end
     end
@@ -341,14 +325,16 @@ describe Transproc::Transformer do
 
     context 'with custom registry' do
       let(:klass) do
-        Class.new(Transproc::Transformer[registry]) do
-          append ' is awesome'
+        Class.new(Dry::Transformer[registry]) do
+          define! do
+            append ' is awesome'
+          end
         end
       end
 
       let(:registry) do
         Module.new do
-          extend Transproc::Registry
+          extend Dry::Transformer::Registry
 
           def self.append(value, suffix)
             value + suffix

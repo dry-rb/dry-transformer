@@ -1,6 +1,6 @@
-RSpec.describe Transproc::Transformer do
-  let(:container) { Module.new { extend Transproc::Registry } }
-  let(:klass) { Transproc::Transformer[container] }
+RSpec.describe Dry::Transformer do
+  let(:container) { Module.new { extend Dry::Transformer::Registry } }
+  let(:klass) { Dry::Transformer[container] }
   let(:transformer) { klass.new }
 
   context 'when invalid method is used' do
@@ -9,7 +9,7 @@ RSpec.describe Transproc::Transformer do
         not_valid
       end
 
-      expect { klass.new }.to raise_error(Transproc::Compiler::InvalidFunctionNameError, /not_valid/)
+      expect { klass.new }.to raise_error(Dry::Transformer::Compiler::InvalidFunctionNameError, /not_valid/)
     end
   end
 end

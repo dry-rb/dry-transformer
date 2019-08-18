@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-describe Transproc::ArrayTransformations do
-  let(:hashes) { Transproc::HashTransformations }
+RSpec.describe Dry::Transformer::ArrayTransformations do
+  let(:hashes) { Dry::Transformer::HashTransformations }
 
   describe '.extract_key' do
     it 'extracts values by key from all hashes' do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Transproc::Conditional do
+RSpec.describe Dry::Transformer::Conditional do
   describe '.not' do
     let(:fn) { described_class.t(:not, -> value { value.is_a? String }) }
     subject  { fn[input] }
@@ -27,7 +27,7 @@ describe Transproc::Conditional do
   describe '.guard' do
     let(:fn) { described_class.t(:guard, condition, operation) }
     let(:condition) { ->(value) { value.is_a?(::String) } }
-    let(:operation) { Transproc::Coercions.t(:to_integer) }
+    let(:operation) { Dry::Transformer::Coercions.t(:to_integer) }
 
     context 'when predicate returns truthy value' do
       it 'applies the transformation and returns the result' do

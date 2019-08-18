@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-describe Transproc::Function do
+RSpec.describe Dry::Transformer::Function do
   let(:container) do
     Module.new do
-      extend Transproc::Registry
+      extend Dry::Transformer::Registry
 
-      import Transproc::HashTransformations
+      import Dry::Transformer::HashTransformations
     end
   end
 
@@ -92,7 +92,7 @@ describe Transproc::Function do
     end
 
     it 'plays well with registered functions' do
-      container.register(:to_string, Transproc::Coercions.t(:to_string))
+      container.register(:to_string, Dry::Transformer::Coercions.t(:to_string))
       fn = container.t(:to_string)
 
       expect(fn[:ok]).to eql('ok')
@@ -100,8 +100,8 @@ describe Transproc::Function do
     end
 
     it 'plays well with functions as arguments' do
-      container.register(:map_array, Transproc::ArrayTransformations.t(:map_array))
-      container.register(:to_symbol, Transproc::Coercions.t(:to_symbol))
+      container.register(:map_array, Dry::Transformer::ArrayTransformations.t(:map_array))
+      container.register(:to_symbol, Dry::Transformer::Coercions.t(:to_symbol))
       fn = container.t(:map_array, container.t(:to_symbol))
 
       expect(fn.call(%w(a b c))).to eql([:a, :b, :c])
@@ -118,8 +118,8 @@ describe Transproc::Function do
   describe '#==' do
     let(:fns) do
       Module.new do
-        extend Transproc::Registry
-        import :wrap, from: Transproc::ArrayTransformations
+        extend Dry::Transformer::Registry
+        import :wrap, from: Dry::Transformer::ArrayTransformations
       end
     end
 
@@ -170,7 +170,7 @@ describe Transproc::Function do
     end
 
     context 'from a transproc' do
-      let(:source) { Transproc::Function.new -> value { value.to_s } }
+      let(:source) { Dry::Transformer::Function.new -> value { value.to_s } }
       it_behaves_like :providing_a_proc
 
       it 'can be applied to collection' do

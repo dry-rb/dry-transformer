@@ -1,20 +1,18 @@
 # frozen_string_literal: true
 
-describe Transproc::Registry do
-  before { module Transproc::Test; end         }
-  after  { Transproc.send :remove_const, :Test }
-
+RSpec.describe Dry::Transformer::Registry do
   let(:foo) do
-    Transproc::Test::Foo = Module.new do
-      extend Transproc::Registry
+    Test::Foo = Module.new do
+      extend Dry::Transformer::Registry
 
       def self.prefix(value, prefix)
         "#{prefix}_#{value}"
       end
     end
   end
-  let(:bar) { Transproc::Test::Bar = Module.new { extend Transproc::Registry } }
-  let(:baz) { Transproc::Test::Baz = Module.new { extend Transproc::Registry } }
+
+  let(:bar) { Test::Bar = Module.new { extend Dry::Transformer::Registry } }
+  let(:baz) { Test::Baz = Module.new { extend Dry::Transformer::Registry } }
 
   describe '.[]' do
     subject(:transproc) { foo[fn, 'baz'] }
@@ -90,7 +88,7 @@ describe Transproc::Registry do
 
     it 'rejects to overwrite existing' do
       expect { foo.register(:prefix) {} }
-        .to raise_error(Transproc::FunctionAlreadyRegisteredError)
+        .to raise_error(Dry::Transformer::FunctionAlreadyRegisteredError)
     end
 
     it 'registers and fetches transproc function' do
@@ -101,7 +99,7 @@ describe Transproc::Registry do
     end
 
     it 'allows to overwrite function arguments' do
-      foo.register(:map_array, Transproc::ArrayTransformations.t(:map_array))
+      foo.register(:map_array, Dry::Transformer::ArrayTransformations.t(:map_array))
 
       fn = foo[:map_array, ->(value) { value.to_sym }]
 
@@ -187,7 +185,7 @@ describe Transproc::Registry do
     context 'an unknown method' do
       it 'fails' do
         expect { bar.import :suffix, from: foo }.to raise_error do |error|
-          expect(error).to be_kind_of Transproc::FunctionNotFoundError
+          expect(error).to be_kind_of Dry::Transformer::FunctionNotFoundError
           expect(error.message).to include 'Foo[:suffix]'
         end
       end

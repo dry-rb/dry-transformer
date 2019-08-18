@@ -11,6 +11,7 @@ platform :mri do
 end
 
 group :tools do
+  gem 'pry'
   gem 'byebug', platform: :mri
   gem 'benchmark-ips'
 end

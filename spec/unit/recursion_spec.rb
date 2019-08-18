@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-describe Transproc::Recursion do
-  let(:hashes) { Transproc::HashTransformations }
+RSpec.describe Dry::Transformer::Recursion do
+  let(:hashes) { Dry::Transformer::HashTransformations }
 
   describe '.recursion' do
     let(:original) do
