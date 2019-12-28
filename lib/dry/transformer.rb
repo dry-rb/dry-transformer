@@ -8,7 +8,6 @@ require 'dry/transformer/composer'
 require 'dry/transformer/error'
 require 'dry/transformer/store'
 require 'dry/transformer/registry'
-require 'dry/transformer/mapper'
 require 'dry/transformer/support/deprecations'
 
 require 'dry/transformer/array'
