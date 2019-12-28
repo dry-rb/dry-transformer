@@ -41,6 +41,7 @@ jobs:
       - name: Run all tests
         env:
           COVERAGE: ${{matrix.coverage}}
+          CODACY_RUN_LOCAL: true
         run: bundle exec rake
   tests-others:
     runs-on: ubuntu-latest
