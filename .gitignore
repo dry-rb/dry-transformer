@@ -13,6 +13,4 @@
 *.o
 *.a
 mkmf.log
-.rubocop.yml
-.rubocop_todo.yml
 
