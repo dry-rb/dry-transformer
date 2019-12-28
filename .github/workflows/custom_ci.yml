@@ -41,6 +41,7 @@ jobs:
       - name: Run all tests
         env:
           COVERAGE: ${{matrix.coverage}}
+          CODACY_PROJECT_TOKEN: ${{secrets.CODACY_PROJECT_TOKEN}}
           CODACY_RUN_LOCAL: true
         run: bundle exec rake
   tests-others:
