@@ -71,6 +71,7 @@ module Dry
         rename = opts.fetch(:as) { first.to_sym }
 
         return import_methods(source, args) if args.count > 1
+
         import_method(source, first, rename)
       end
 

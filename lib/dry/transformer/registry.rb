@@ -49,6 +49,7 @@ module Dry
         fetched = fetch(fn)
 
         return Function.new(fetched, args: args, name: fn) unless already_wrapped?(fetched)
+
         args.empty? ? fetched : fetched.with(*args)
       end
       alias_method :t, :[]
@@ -74,6 +75,7 @@ module Dry
         if contain?(name)
           raise FunctionAlreadyRegisteredError, "Function #{name} is already defined"
         end
+
         @store = store.register(name, fn, &block)
         self
       end
@@ -131,8 +133,9 @@ module Dry
       #
       def fetch(fn)
         return fn unless fn.instance_of? Symbol
+
         respond_to?(fn) ? method(fn) : store.fetch(fn)
-      rescue
+      rescue StandardError
         raise FunctionNotFoundError.new(fn, self)
       end
 

@@ -78,6 +78,7 @@ module Dry
       # @api public
       def ==(other)
         return false unless other.instance_of?(self.class)
+
         [fn, name, args] == [other.fn, other.name, other.args]
       end
       alias_method :eql?, :==
@@ -97,7 +98,7 @@ module Dry
       # @return [Proc]
       #
       def to_proc
-        if args.size > 0
+        if !args.empty?
           proc { |*value| fn.call(*value, *args) }
         else
           fn.to_proc

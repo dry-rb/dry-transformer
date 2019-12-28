@@ -11,6 +11,7 @@ module Dry
             root, nodes = array
             return EMPTY_ARRAY if root.nil?
             return root if nodes.nil?
+
             groups = group_nodes(nodes, mappings)
 
             root.map do |element|
@@ -54,6 +55,7 @@ module Dry
 
           def element_candidates_key(element, keys)
             return element.values_at(*keys) if keys.size > 1
+
             element[keys.first]
           end
         end

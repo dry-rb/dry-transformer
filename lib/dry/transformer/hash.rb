@@ -300,7 +300,7 @@ module Dry
       def self.unwrap(source_hash, root, selected = nil, prefix: false)
         return source_hash unless source_hash[root]
 
-        add_prefix = ->(key) do
+        add_prefix = lambda do |key|
           combined = [root, key].join('_')
           root.is_a?(::Symbol) ? combined.to_sym : combined
         end
@@ -441,7 +441,7 @@ module Dry
       def self.deep_merge(hash, other)
         Hash[hash].merge(other) do |_, original_value, new_value|
           if original_value.respond_to?(:to_hash) &&
-            new_value.respond_to?(:to_hash)
+             new_value.respond_to?(:to_hash)
             deep_merge(Hash[original_value], Hash[new_value])
           else
             new_value
