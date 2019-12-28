@@ -1,7 +1,7 @@
 ---
 title: Using standalone functions
-layout: gem-single
 name: dry-transformer
+layout: gem-single
 ---
 
 You can use `dry-transformer` and its function registry feature stand-alone, without the need to define transformation classes. To do so, simply define a module and extend it with the registry API:

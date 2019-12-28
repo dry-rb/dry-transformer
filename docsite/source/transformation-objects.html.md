@@ -1,6 +1,7 @@
 ---
 title: Transformation objects
 name: dry-transformer
+layout: gem-single
 ---
 
 You can define transformation classes using the DSL which converts every method call to its corresponding transformation, and composes these transformations into a transformation pipeline. Here's a simple example where the default registry is used:
