@@ -7,6 +7,7 @@ gem 'rspec', '~> 3.8'
 gem 'dry-equalizer', '~> 0.2'
 
 platform :mri do
+  gem 'codacy-coverage', require: false
   gem 'simplecov', require: false
 end
 

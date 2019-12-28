@@ -42,18 +42,6 @@ jobs:
         env:
           COVERAGE: ${{matrix.coverage}}
         run: bundle exec rake
-      - name: Send coverage results
-        if: "matrix.coverage == 'true'"
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          GIT_COMMIT_SHA: ${{github.sha}}
-          GIT_BRANCH: ${{github.ref}}
-          GIT_COMMITTED_AT: ${{github.event.head_commit.timestamp}}
-        run: |
-          GIT_BRANCH=`ruby -e "puts ENV['GITHUB_REF'].split('/', 3).last"` \
-          GIT_COMMITTED_AT=`ruby -r time -e "puts Time.iso8601(ENV['GIT_COMMITTED_AT']).to_i"` \
-          ./tmp/cc-test-reporter after-build
-
   tests-others:
     runs-on: ubuntu-latest
     strategy:
