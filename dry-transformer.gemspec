@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = Dry::Transformer::VERSION.dup
   spec.authors       = ['Piotr Solnica']
   spec.email         = ['piotr.solnica@gmail.com']
-  spec.summary       = 'Transform Ruby objects in functional style'
+  spec.summary       = 'Data transformation toolkit'
   spec.description   = spec.summary
   spec.homepage      = 'https://dry-rb.org/gems/dry-transformer/'
   spec.license       = 'MIT'
