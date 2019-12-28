@@ -1,9 +1,6 @@
-version: "2"
+# this file is managed by dry-rb/devtools project
 
-prepare:
-  fetch:
-  - url: "https://raw.githubusercontent.com/dry-rb/devtools/master/.rubocop.yml"
-    path: ".rubocop.yml"
+version: "2"
 
 exclude_patterns:
   - "benchmarks/"
