@@ -15,4 +15,5 @@ group :tools do
   gem 'pry'
   gem 'byebug', platform: :mri
   gem 'benchmark-ips'
+  gem 'ossy', git: 'https://github.com/solnic/ossy.git', branch: 'master', platform: :mri
 end
