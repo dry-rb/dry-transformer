@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-if ENV['COVERAGE'] == 'true'
-  require 'codacy-coverage'
-  Codacy::Reporter.start
-end
+require_relative 'support/coverage'
 
 begin
   require 'byebug'
