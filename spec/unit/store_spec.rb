@@ -186,7 +186,7 @@ RSpec.describe Dry::Transformer::Store do
       end
 
       it 'skips Dry::Transformer::Registry singleton methods' do
-        pending "this fails for some reason" if RUBY_ENGINE == "jruby"
+        pending 'this fails for some reason' if RUBY_ENGINE == 'jruby'
         expect(subject.methods.keys).to contain_exactly(:foo, :bar, :baz, :qux)
       end
     end

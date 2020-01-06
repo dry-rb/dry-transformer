@@ -318,7 +318,7 @@ RSpec.describe Dry::Transformer do
       end
     end
 
-    it "transforms input" do
+    it 'transforms input' do
       expect(transformer.(input)).to eql(expected_output)
     end
 
