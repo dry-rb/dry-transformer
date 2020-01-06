@@ -17,8 +17,8 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
       let(:input) do
         [
           [
-            {name: 'Jane', email: 'jane@doe.org'}.freeze,
-            {name: 'Joe', email: 'joe@doe.org'}.freeze
+            { name: 'Jane', email: 'jane@doe.org' }.freeze,
+            { name: 'Joe', email: 'joe@doe.org' }.freeze
           ].freeze
         ].freeze
       end
@@ -30,29 +30,29 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
       let(:input) do
         [
           [
-            {name: 'Jane', email: 'jane@doe.org'}.freeze,
-            {name: 'Joe', email: 'joe@doe.org'}.freeze
+            { name: 'Jane', email: 'jane@doe.org' }.freeze,
+            { name: 'Joe', email: 'joe@doe.org' }.freeze
           ].freeze,
           [
             [
-              {user: 'Jane', title: 'One'}.freeze,
-              {user: 'Jane', title: 'Two'}.freeze,
-              {user: 'Joe', title: 'Three'}.freeze
+              { user: 'Jane', title: 'One' }.freeze,
+              { user: 'Jane', title: 'Two' }.freeze,
+              { user: 'Joe', title: 'Three' }.freeze
             ]
           ]
         ].freeze
       end
-      let(:mappings) { [[:tasks, {name: :user}]] }
+      let(:mappings) { [[:tasks, { name: :user }]] }
 
       it 'merges hashes from arrays using provided join keys' do
         output = [
-          {name: 'Jane', email: 'jane@doe.org', tasks: [
-            {user: 'Jane', title: 'One'},
-            {user: 'Jane', title: 'Two'}
-          ]},
-          {name: 'Joe', email: 'joe@doe.org', tasks: [
-            {user: 'Joe', title: 'Three'}
-          ]}
+          { name: 'Jane', email: 'jane@doe.org', tasks: [
+            { user: 'Jane', title: 'One' },
+            { user: 'Jane', title: 'Two' }
+          ] },
+          { name: 'Joe', email: 'joe@doe.org', tasks: [
+            { user: 'Joe', title: 'Three' }
+          ] }
         ]
         is_expected.to eql(output)
       end
@@ -61,40 +61,40 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
     context 'with empty nodes' do
       let(:input) do
         [
-          [{name: 'Jane', email: 'jane@doe.org'}.freeze].freeze,
+          [{ name: 'Jane', email: 'jane@doe.org' }.freeze].freeze,
           [
             []
           ]
         ].freeze
       end
 
-      let(:mappings) { [[:tasks, {name: :user}]] }
+      let(:mappings) { [[:tasks, { name: :user }]] }
 
-      it { is_expected.to eq([{name: 'Jane', email: 'jane@doe.org', tasks: []}]) }
+      it { is_expected.to eq([{ name: 'Jane', email: 'jane@doe.org', tasks: [] }]) }
     end
 
     context 'with double mapping' do
       let(:input) do
         [
           [
-            {name: 'Jane', email: 'jane@doe.org'}.freeze
+            { name: 'Jane', email: 'jane@doe.org' }.freeze
           ].freeze,
           [
             [
-              {user: 'Jane', user_email: 'jane@doe.org', title: 'One'}.freeze,
-              {user: 'Jane', user_email: '', title: 'Two'}.freeze
+              { user: 'Jane', user_email: 'jane@doe.org', title: 'One' }.freeze,
+              { user: 'Jane', user_email: '', title: 'Two' }.freeze
             ].freeze
           ].freeze
         ].freeze
       end
 
-      let(:mappings) { [[:tasks, {name: :user, email: :user_email}]] }
+      let(:mappings) { [[:tasks, { name: :user, email: :user_email }]] }
 
       it 'searches by two keys simultaneously' do
         output = [
-          {name: 'Jane', email: 'jane@doe.org', tasks: [
-            {user: 'Jane', user_email: 'jane@doe.org', title: 'One'}
-          ]}
+          { name: 'Jane', email: 'jane@doe.org', tasks: [
+            { user: 'Jane', user_email: 'jane@doe.org', title: 'One' }
+          ] }
         ]
         is_expected.to eql(output)
       end
@@ -105,7 +105,7 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
         123
       end
 
-      let(:mappings) { [[:page, {page_id: :id}]] }
+      let(:mappings) { [[:page, { page_id: :id }]] }
 
       it { is_expected.to eq(123) }
     end
@@ -120,7 +120,7 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
         ]
       end
 
-      let(:mappings) { [[:menu_items, {id: :menu_id}, [[:page, {page_id: :id}]]]] }
+      let(:mappings) { [[:menu_items, { id: :menu_id }, [[:page, { page_id: :id }]]]] }
 
       it 'does not crash' do
         expect { result }.not_to raise_error
@@ -144,29 +144,29 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
       let(:input) do
         [
           my_enumerator.new([
-            {name: 'Jane', email: 'jane@doe.org'}.freeze,
-            {name: 'Joe', email: 'joe@doe.org'}.freeze
+            { name: 'Jane', email: 'jane@doe.org' }.freeze,
+            { name: 'Joe', email: 'joe@doe.org' }.freeze
           ].freeze),
           my_enumerator.new([
             my_enumerator.new([
-              {user: 'Jane', title: 'One'}.freeze,
-              {user: 'Jane', title: 'Two'}.freeze,
-              {user: 'Joe', title: 'Three'}.freeze
+              { user: 'Jane', title: 'One' }.freeze,
+              { user: 'Jane', title: 'Two' }.freeze,
+              { user: 'Joe', title: 'Three' }.freeze
             ].freeze)
           ].freeze)
         ].freeze
       end
-      let(:mappings) { [[:tasks, {name: :user}]] }
+      let(:mappings) { [[:tasks, { name: :user }]] }
 
       it 'supports enumerables as well' do
         output = [
-          {name: 'Jane', email: 'jane@doe.org', tasks: [
-            {user: 'Jane', title: 'One'},
-            {user: 'Jane', title: 'Two'}
-          ]},
-          {name: 'Joe', email: 'joe@doe.org', tasks: [
-            {user: 'Joe', title: 'Three'}
-          ]}
+          { name: 'Jane', email: 'jane@doe.org', tasks: [
+            { user: 'Jane', title: 'One' },
+            { user: 'Jane', title: 'Two' }
+          ] },
+          { name: 'Joe', email: 'joe@doe.org', tasks: [
+            { user: 'Joe', title: 'Three' }
+          ] }
         ]
         is_expected.to eql(output)
       end
@@ -176,22 +176,22 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
       let(:input) do
         [
           [
-            {name: 'Jane', email: 'jane@doe.org'},
-            {name: 'Joe', email: 'joe@doe.org'}
+            { name: 'Jane', email: 'jane@doe.org' },
+            { name: 'Joe', email: 'joe@doe.org' }
           ],
           [
             [
               # user tasks
               [
-                {user: 'Jane', title: 'One'},
-                {user: 'Jane', title: 'Two'},
-                {user: 'Joe', title: 'Three'}
+                { user: 'Jane', title: 'One' },
+                { user: 'Jane', title: 'Two' },
+                { user: 'Joe', title: 'Three' }
               ],
               [
                 # task tags
                 [
-                  {task: 'One', tag: 'red'},
-                  {task: 'Three', tag: 'blue'}
+                  { task: 'One', tag: 'red' },
+                  { task: 'Three', tag: 'blue' }
                 ]
               ]
             ]
@@ -199,19 +199,19 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
         ]
       end
 
-      let(:mappings) { [[:tasks, {name: :user}, [[:tags, title: :task]]]] }
+      let(:mappings) { [[:tasks, { name: :user }, [[:tags, title: :task]]]] }
 
       it 'merges hashes from arrays using provided join keys' do
         output = [
-          {name: 'Jane', email: 'jane@doe.org', tasks: [
-            {user: 'Jane', title: 'One', tags: [{task: 'One', tag: 'red'}]},
-            {user: 'Jane', title: 'Two', tags: []}
-          ]},
+          { name: 'Jane', email: 'jane@doe.org', tasks: [
+            { user: 'Jane', title: 'One', tags: [{ task: 'One', tag: 'red' }] },
+            { user: 'Jane', title: 'Two', tags: [] }
+          ] },
           {
             name: 'Joe', email: 'joe@doe.org', tasks: [
               {
                 user: 'Joe', title: 'Three', tags: [
-                  {task: 'Three', tag: 'blue'}
+                  { task: 'Three', tag: 'blue' }
                 ]
               }
             ]

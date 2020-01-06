@@ -135,7 +135,7 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
     end
 
     it 'updates the existing group' do
-      input  = [
+      input = [
         {
           name: 'Jane',
           title: 'One',
@@ -163,7 +163,7 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
     end
 
     it 'ingnores old values except for array of tuples' do
-      input  = [
+      input = [
         { name: 'Jane', title: 'One',   tasks: [{ priority: 1 }, :wrong] },
         { name: 'Jane', title: 'Two',   tasks: :wrong }
       ]

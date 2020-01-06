@@ -289,8 +289,7 @@ RSpec.describe Dry::Transformer do
         { 'user_name' => 'Jane',
           'city' => 'NYC',
           'street' => 'Street 1',
-          'zipcode' => '123'
-        }
+          'zipcode' => '123' }
       ]
     end
 

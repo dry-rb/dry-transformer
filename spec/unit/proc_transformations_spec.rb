@@ -11,7 +11,7 @@ RSpec.describe Dry::Transformer::ProcTransformations do
     let(:input) { 'bar' }
     let(:output) { 'foo_bar' }
 
-    subject  { fn[input] }
+    subject { fn[input] }
 
     it 'binds the given proc to the specified binding' do
       is_expected.to eq(output)
