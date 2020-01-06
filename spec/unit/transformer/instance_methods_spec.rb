@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Dry::Transformer, 'instance methods' do
   subject(:transformer) do
     Class.new(Dry::Transformer[registry]) do

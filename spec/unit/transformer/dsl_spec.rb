@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Dry::Transformer do
   let(:container) { Module.new { extend Dry::Transformer::Registry } }
   let(:klass) { Dry::Transformer[container] }
