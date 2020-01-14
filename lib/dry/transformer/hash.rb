@@ -310,9 +310,10 @@ module Dry
           keys = nested_hash.keys
           keys &= selected if selected
           new_keys = prefix ? keys.map(&add_prefix) : keys
+          nested_contains_root_key = nested_hash.key?(root)
 
           hash.update(Hash[new_keys.zip(keys.map { |key| nested_hash.delete(key) })])
-          hash.delete(root) if nested_hash.empty?
+          hash.delete(root) if nested_hash.empty? && !nested_contains_root_key
         end
       end
 

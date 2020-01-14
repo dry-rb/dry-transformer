@@ -232,6 +232,24 @@ RSpec.describe Dry::Transformer::HashTransformations do
 
       expect(unwrap[input]).to eql(output)
     end
+
+    it 'works when the root key exists in a nested hash with a primitive type' do
+      unwrap = described_class.t(:unwrap, 'wrapped')
+
+      input = { 'wrapped' => { 'wrapped' => nil }.freeze }.freeze
+      output = { 'wrapped' => nil }
+
+      expect(unwrap[input]).to eql(output)
+    end
+
+    it 'works when the root key exists in a nested hash with a nested hash' do
+      unwrap = described_class.t(:unwrap, 'wrapped')
+
+      input = { 'wrapped' => { 'wrapped' => { 'id' => 1 }.freeze }.freeze }.freeze
+      output = { 'wrapped' => { 'id' => 1 } }
+
+      expect(unwrap[input]).to eql(output)
+    end
   end
 
   it { expect(described_class).not_to be_contain(:unwrap!) }
