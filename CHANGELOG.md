@@ -1,10 +1,10 @@
-# Unreleased
+# 2020-01-14
 
 ## Fixed
 
-Fixed Dry::Transformer::HashTransformations.unwrap when hash contains root key (AMHOL)
+Fixed Dry::Transformer::HashTransformations.unwrap when hash contains root key (@AMHOL)
 
-[Compare master...v0.1.0](https://github.com/dry-rb/dry-transaction/compare/master...v0.1.0)
+[Compare v0.1.0...v0.1.1](https://github.com/dry-rb/dry-transaction/compare/v0.1.0...v0.1.1)
 
 # v0.1.0 2019-12-28
 
