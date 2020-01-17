@@ -1,0 +1,9 @@
+---
+- version: 0.1.1
+  date: '2020-01-14'
+  fixed:
+  - Fixed Dry::Transformer::HashTransformations.unwrap when hash contains root key
+    (@AMHOL)
+- version: 0.1.0
+  date: '2019-12-28'
+  summary: Initial port of the [transproc](https://github.com/solnic/transproc) gem.
