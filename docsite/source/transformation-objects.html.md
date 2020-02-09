@@ -4,10 +4,13 @@ name: dry-transformer
 layout: gem-single
 ---
 
-You can define transformation classes using the DSL which converts every method call to its corresponding transformation, and composes these transformations into a transformation pipeline. Here's a simple example where the default registry is used:
+You can define transformation classes using the DSL which converts every method call to its corresponding transformation, and composes these transformations into a transformation pipeline. Here's a simple example:
 
 ```ruby
-class MyMapper < Dry::Transformer[Dry::Transformer::Registry]
+class MyMapper < Dry::Transformer::Pipe
+  import Dry::Transformer::ArrayTransformations
+  import Dry::Transformer::HashTransformations
+
   define! do
     map_array do
       symbolize_keys
