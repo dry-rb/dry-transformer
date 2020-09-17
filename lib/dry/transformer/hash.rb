@@ -4,6 +4,10 @@ require 'dry/transformer/coercions'
 
 module Dry
   module Transformer
+    USE_HASH_SLICE = Gem::Dependency.new('ruby', '>= 2.5').match?('ruby', RUBY_VERSION)
+    USE_HASH_TRANSFORM_KEYS = Gem::Dependency.new('ruby', '>= 2.5').match?('ruby', RUBY_VERSION)
+    USE_HASH_TRANSFORM_VALUES = Gem::Dependency.new('ruby', '>= 2.4').match?('ruby', RUBY_VERSION)
+
     # Transformation functions for Hash objects
     #
     # @example
@@ -20,7 +24,7 @@ module Dry
     module HashTransformations
       extend Registry
 
-      if RUBY_VERSION >= '2.5'
+      if USE_HASH_TRANSFORM_KEYS
         # Map all keys in a hash with the provided transformation function
         #
         # @example
@@ -132,7 +136,7 @@ module Dry
         end
       end
 
-      if RUBY_VERSION >= '2.4'
+      if USE_HASH_TRANSFORM_VALUES
         # Map all values in a hash using transformation function
         #
         # @example
@@ -211,7 +215,7 @@ module Dry
         Hash[hash].reject { |k, _| keys.include?(k) }
       end
 
-      if RUBY_VERSION >= '2.5'
+      if USE_HASH_SLICE
         # Accepts specified keys from a hash
         #
         # @example
