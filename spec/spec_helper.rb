@@ -6,6 +6,7 @@ begin
   require 'byebug'
 rescue LoadError; end
 require 'dry/transformer/all'
+require 'pathname'
 
 root = Pathname(__FILE__).dirname
 Dir[root.join('support/*.rb').to_s].each { |f| require f }

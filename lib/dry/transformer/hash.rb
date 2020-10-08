@@ -20,27 +20,19 @@ module Dry
     module HashTransformations
       extend Registry
 
-      if RUBY_VERSION >= '2.5'
-        # Map all keys in a hash with the provided transformation function
-        #
-        # @example
-        #   Dry::Transformer(:map_keys, -> s { s.upcase })['name' => 'Jane']
-        #   # => {"NAME" => "Jane"}
-        #
-        # @param [Hash]
-        #
-        # @return [Hash]
-        #
-        # @api public
-        def self.map_keys(source_hash, fn)
-          Hash[source_hash].transform_keys!(&fn)
-        end
-      else
-        def self.map_keys(source_hash, fn)
-          Hash[source_hash].tap do |hash|
-            hash.keys.each { |key| hash[fn[key]] = hash.delete(key) }
-          end
-        end
+      # Map all keys in a hash with the provided transformation function
+      #
+      # @example
+      #   Dry::Transformer(:map_keys, -> s { s.upcase })['name' => 'Jane']
+      #   # => {"NAME" => "Jane"}
+      #
+      # @param [Hash]
+      #
+      # @return [Hash]
+      #
+      # @api public
+      def self.map_keys(source_hash, fn)
+        Hash[source_hash].transform_keys!(&fn)
       end
 
       # Symbolize all keys in a hash
@@ -132,27 +124,19 @@ module Dry
         end
       end
 
-      if RUBY_VERSION >= '2.4'
-        # Map all values in a hash using transformation function
-        #
-        # @example
-        #   Dry::Transformer(:map_values, -> v { v.upcase })[:name => 'Jane']
-        #   # => {"name" => "JANE"}
-        #
-        # @param [Hash]
-        #
-        # @return [Hash]
-        #
-        # @api public
-        def self.map_values(source_hash, fn)
-          Hash[source_hash].transform_values!(&fn)
-        end
-      else
-        def self.map_values(source_hash, fn)
-          Hash[source_hash].tap do |hash|
-            hash.each { |key, value| hash[key] = fn[value] }
-          end
-        end
+      # Map all values in a hash using transformation function
+      #
+      # @example
+      #   Dry::Transformer(:map_values, -> v { v.upcase })[:name => 'Jane']
+      #   # => {"name" => "JANE"}
+      #
+      # @param [Hash]
+      #
+      # @return [Hash]
+      #
+      # @api public
+      def self.map_values(source_hash, fn)
+        Hash[source_hash].transform_values!(&fn)
       end
 
       # Rename all keys in a hash using provided mapping hash
@@ -211,26 +195,20 @@ module Dry
         Hash[hash].reject { |k, _| keys.include?(k) }
       end
 
-      if RUBY_VERSION >= '2.5'
-        # Accepts specified keys from a hash
-        #
-        # @example
-        #   Dry::Transformer(:accept_keys, [:name])[name: 'Jane', email: 'jane@doe.org']
-        #   # => {:name=>"Jane"}
-        #
-        # @param [Hash] hash The input hash
-        # @param [Array] keys The keys to be accepted
-        #
-        # @return [Hash]
-        #
-        # @api public
-        def self.accept_keys(hash, keys)
-          Hash[hash].slice(*keys)
-        end
-      else
-        def self.accept_keys(hash, keys)
-          reject_keys(hash, hash.keys - keys)
-        end
+      # Accepts specified keys from a hash
+      #
+      # @example
+      #   Dry::Transformer(:accept_keys, [:name])[name: 'Jane', email: 'jane@doe.org']
+      #   # => {:name=>"Jane"}
+      #
+      # @param [Hash] hash The input hash
+      # @param [Array] keys The keys to be accepted
+      #
+      # @return [Hash]
+      #
+      # @api public
+      def self.accept_keys(hash, keys)
+        Hash[hash].slice(*keys)
       end
 
       # Map a key in a hash with the provided transformation function
