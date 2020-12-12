@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require_relative 'support/coverage'
+require_relative "support/coverage"
 
 begin
-  require 'byebug'
+  require "byebug"
 rescue LoadError; end
-require 'dry/transformer/all'
-require 'pathname'
+require "dry/transformer/all"
+require "pathname"
 
 root = Pathname(__FILE__).dirname
-Dir[root.join('support/*.rb').to_s].each { |f| require f }
+Dir[root.join("support/*.rb").to_s].each { |f| require f }
 
 # Namespace holding all objects created during specs
 module Test
