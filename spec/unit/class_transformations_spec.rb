@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'dry/equalizer'
+require "dry/equalizer"
 
 RSpec.describe Dry::Transformer::ClassTransformations do
-  describe '.constructor_inject' do
+  describe ".constructor_inject" do
     let(:klass) do
       Struct.new(:name, :age) { include Dry::Equalizer.new(:name, :age) }
     end
 
-    it 'returns a new object initialized with the given arguments' do
+    it "returns a new object initialized with the given arguments" do
       constructor_inject = described_class.t(:constructor_inject, klass)
 
-      input = ['Jane', 25]
+      input = ["Jane", 25]
       output = klass.new(*input)
       result = constructor_inject[*input]
 
@@ -20,7 +20,7 @@ RSpec.describe Dry::Transformer::ClassTransformations do
     end
   end
 
-  describe '.set_ivars' do
+  describe ".set_ivars" do
     let(:klass) do
       Class.new do
         include Dry::Equalizer.new(:name, :age)
@@ -35,10 +35,10 @@ RSpec.describe Dry::Transformer::ClassTransformations do
       end
     end
 
-    it 'allocates a new object and sets instance variables from hash key/value pairs' do
+    it "allocates a new object and sets instance variables from hash key/value pairs" do
       set_ivars = described_class.t(:set_ivars, klass)
 
-      input = { name: 'Jane', age: 25 }
+      input = { name: "Jane", age: 25 }
       output = klass.new(input)
       result = set_ivars[input]
 

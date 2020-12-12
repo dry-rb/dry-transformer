@@ -14,51 +14,51 @@ RSpec.describe Dry::Transformer::Registry do
   let(:bar) { Test::Bar = Module.new { extend Dry::Transformer::Registry } }
   let(:baz) { Test::Baz = Module.new { extend Dry::Transformer::Registry } }
 
-  describe '.[]' do
-    subject(:transproc) { foo[fn, 'baz'] }
+  describe ".[]" do
+    subject(:transproc) { foo[fn, "baz"] }
 
-    context 'from a method' do
+    context "from a method" do
       let(:fn) { :prefix }
 
-      it 'builds a function from a method' do
-        expect(transproc['qux']).to eql 'baz_qux'
+      it "builds a function from a method" do
+        expect(transproc["qux"]).to eql "baz_qux"
       end
     end
 
-    context 'from a closure' do
-      let(:fn) { -> value, prefix { [prefix, '_', value].join } }
+    context "from a closure" do
+      let(:fn) { -> value, prefix { [prefix, "_", value].join } }
 
-      it 'builds a function from a method' do
-        expect(transproc['qux']).to eql 'baz_qux'
+      it "builds a function from a method" do
+        expect(transproc["qux"]).to eql "baz_qux"
       end
     end
   end
 
-  describe '.t' do
-    subject(:transproc) { foo.t(:prefix, 'baz') }
+  describe ".t" do
+    subject(:transproc) { foo.t(:prefix, "baz") }
 
-    it 'is an alias for .[]' do
-      expect(transproc['qux']).to eql 'baz_qux'
+    it "is an alias for .[]" do
+      expect(transproc["qux"]).to eql "baz_qux"
     end
   end
 
-  describe '.contain?' do
-    context 'with absent function' do
+  describe ".contain?" do
+    context "with absent function" do
       it { expect(foo.contain?(:something)).to be false }
     end
 
-    context 'with class method' do
+    context "with class method" do
       it { expect(foo.contain?(:prefix)).to be true }
     end
 
-    context 'with imported methods' do
+    context "with imported methods" do
       before { bar.import foo }
 
       it { expect(bar.contain?(:prefix)).to be true }
     end
   end
 
-  describe '.register' do
+  describe ".register" do
     it { expect(foo).not_to be_contain(:increment) }
 
     it { expect(foo).to be_contain(:prefix) }
@@ -67,38 +67,38 @@ RSpec.describe Dry::Transformer::Registry do
       foo.register(:increment, ->(v) { v + 1 })
     end
 
-    it 'returns self' do
+    it "returns self" do
       expect(do_register).to eq foo
     end
 
-    it 'registers function' do
+    it "registers function" do
       do_register
       expect(foo).to be_contain(:increment)
     end
 
-    it 'preserves previous functions' do
+    it "preserves previous functions" do
       do_register
       expect(foo).to be_contain(:prefix)
     end
 
-    it 'makes function available' do
+    it "makes function available" do
       do_register
       expect(foo[:increment][2]).to eq 3
     end
 
-    it 'rejects to overwrite existing' do
+    it "rejects to overwrite existing" do
       expect { foo.register(:prefix) {} }
         .to raise_error(Dry::Transformer::FunctionAlreadyRegisteredError)
     end
 
-    it 'registers and fetches transproc function' do
-      function = foo[:prefix, '1']
+    it "registers and fetches transproc function" do
+      function = foo[:prefix, "1"]
       foo.register(:prefix_one, function)
 
       expect(foo[:prefix_one]).to eq function
     end
 
-    it 'allows to overwrite function arguments' do
+    it "allows to overwrite function arguments" do
       foo.register(:map_array, Dry::Transformer::ArrayTransformations.t(:map_array))
 
       fn = foo[:map_array, ->(value) { value.to_sym }]
@@ -106,97 +106,97 @@ RSpec.describe Dry::Transformer::Registry do
       expect(fn.call(%w(a b c))).to eq([:a, :b, :c])
     end
 
-    it 'registers and fetches composite' do
-      composite = foo[:prefix, '1'] + foo[:prefix, '2']
+    it "registers and fetches composite" do
+      composite = foo[:prefix, "1"] + foo[:prefix, "2"]
       foo.register(:double_prefix, composite)
 
       expect(foo[:double_prefix]).to eq composite
     end
 
-    context 'with block argument' do
+    context "with block argument" do
       def do_register
         foo.register(:increment) { |v| v + 1 }
       end
 
-      it 'registers function' do
+      it "registers function" do
         do_register
         expect(foo).to be_contain(:increment)
       end
 
-      it 'makes function available' do
+      it "makes function available" do
         do_register
         expect(foo[:increment][2]).to eq 3
       end
     end
   end
 
-  describe '.import' do
-    context 'a module' do
+  describe ".import" do
+    context "a module" do
       subject(:import) { bar.import foo }
 
-      it 'registers all its methods' do
+      it "registers all its methods" do
         import
-        expect(bar[:prefix, 'baz']['qux']).to eql 'baz_qux'
+        expect(bar[:prefix, "baz"]["qux"]).to eql "baz_qux"
       end
 
-      it 'returns itself' do
+      it "returns itself" do
         expect(import).to eq bar
       end
     end
 
-    context 'a method' do
+    context "a method" do
       before { bar.import :prefix, from: foo }
 
-      it 'registers a transproc' do
-        expect(bar[:prefix, 'bar']['baz']).to eql 'bar_baz'
+      it "registers a transproc" do
+        expect(bar[:prefix, "bar"]["baz"]).to eql "bar_baz"
       end
     end
 
-    context 'an imported method' do
+    context "an imported method" do
       before do
         bar.import :prefix, from: foo, as: :affix
         baz.import :affix, from: bar
       end
 
-      it 'registers a transproc' do
-        expect(baz[:affix, 'bar']['baz']).to eql 'bar_baz'
+      it "registers a transproc" do
+        expect(baz[:affix, "bar"]["baz"]).to eql "bar_baz"
       end
     end
 
-    context 'a list of methods' do
+    context "a list of methods" do
       before { bar.import :prefix, from: foo }
       before { bar.import :prefix, from: foo, as: :affix }
       before { baz.import :prefix, :affix, from: bar }
 
-      it 'registers a transproc' do
-        expect(baz[:prefix, 'bar']['baz']).to eql 'bar_baz'
-        expect(baz[:affix, 'bar']['baz']).to eql 'bar_baz'
+      it "registers a transproc" do
+        expect(baz[:prefix, "bar"]["baz"]).to eql "bar_baz"
+        expect(baz[:affix, "bar"]["baz"]).to eql "bar_baz"
       end
     end
 
-    context 'a renamed method' do
+    context "a renamed method" do
       before { bar.import :prefix, from: foo, as: :affix }
 
-      it 'registers a transproc under the new name' do
-        expect(bar[:affix, 'bar']['baz']).to eql 'bar_baz'
+      it "registers a transproc under the new name" do
+        expect(bar[:affix, "bar"]["baz"]).to eql "bar_baz"
       end
     end
 
-    context 'an unknown method' do
-      it 'fails' do
+    context "an unknown method" do
+      it "fails" do
         expect { bar.import :suffix, from: foo }.to raise_error do |error|
           expect(error).to be_kind_of Dry::Transformer::FunctionNotFoundError
-          expect(error.message).to include 'Foo[:suffix]'
+          expect(error.message).to include "Foo[:suffix]"
         end
       end
     end
   end
 
-  describe '.uses' do
+  describe ".uses" do
     before { bar.uses foo }
 
-    it 'is an alias for .import' do
-      expect(bar[:prefix, 'baz']['qux']).to eql 'baz_qux'
+    it "is an alias for .import" do
+      expect(bar[:prefix, "baz"]["qux"]).to eql "baz_qux"
     end
   end
 end
