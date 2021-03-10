@@ -34,9 +34,9 @@ RSpec.describe Dry::Transformer::Function do
 
       expect(f3.to_ast).to eql(
         [
-          :symbolize_keys, [],
+          :symbolize_keys, [], {},
           [
-            :rename_keys, [user_name: :name]
+            :rename_keys, [], {user_name: :name}
           ]
         ]
       )
@@ -47,12 +47,12 @@ RSpec.describe Dry::Transformer::Function do
 
       expect(f4.to_ast).to eql(
         [
-          :symbolize_keys, [],
+          :symbolize_keys, [], {},
           [
-            :rename_keys, [user_name: :name]
+            :rename_keys, [], {user_name: :name}
           ],
           [
-            :nest, [:details, [:name]]
+            :nest, [:details, [:name]], {}
           ]
         ]
       )
@@ -68,9 +68,9 @@ RSpec.describe Dry::Transformer::Function do
 
       expect(f3.to_ast).to eql(
         [
-          f1.fn, [2],
+          f1.fn, [2], {},
           [
-            f2.fn, []
+            f2.fn, [], {}
           ]
         ]
       )
@@ -83,9 +83,9 @@ RSpec.describe Dry::Transformer::Function do
       expect(f["user_name" => "Jane"]).to eql(name: "Jane")
       expect(f.to_ast).to eql(
         [
-          :symbolize_keys, [],
+          :symbolize_keys, [], {},
           [
-            :rename_keys, [user_name: :name]
+            :rename_keys, [], {user_name: :name}
           ]
         ]
       )
@@ -96,7 +96,7 @@ RSpec.describe Dry::Transformer::Function do
       fn = container.t(:to_string)
 
       expect(fn[:ok]).to eql("ok")
-      expect(fn.to_ast).to eql([:to_string, []])
+      expect(fn.to_ast).to eql([:to_string, [], {}])
     end
 
     it "plays well with functions as arguments" do
@@ -108,9 +108,25 @@ RSpec.describe Dry::Transformer::Function do
       expect(fn.to_ast).to eql(
         [
           :map_array, [
-            [:to_symbol, []]
-          ]
+            [:to_symbol, [], {}]
+          ], {}
         ]
+      )
+    end
+
+    it "plays well with keyword arguments" do
+      container = Module.new do
+        extend Dry::Transformer::Registry
+
+        def self.trim(string, limit:)
+          string[0..(limit - 1)]
+        end
+      end
+
+      fn = container[:trim, limit: 3]
+
+      expect(fn.to_ast).to eql(
+        [:trim, [], {limit: 3}]
       )
     end
   end

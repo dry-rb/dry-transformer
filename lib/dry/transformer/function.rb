@@ -97,8 +97,7 @@ module Dry
       #
       # @api public
       def to_ast
-        args_ast = args.map { |arg| arg.respond_to?(:to_ast) ? arg.to_ast : arg }
-        [name, args_ast]
+        [name, object_to_ast(args), object_to_ast(kwargs)]
       end
 
       # Converts a transproc to a simple proc
@@ -110,6 +109,22 @@ module Dry
           proc { |*value| fn.call(*value, *args, **kwargs) }
         else
           fn.to_proc
+        end
+      end
+
+      private
+
+      # @api private
+      def object_to_ast(object)
+        case object
+        when Array
+          object.map { |item| object_to_ast(item) }
+        when Hash
+          object.each_with_object({}) { |(key, value), hash|
+            hash[object_to_ast(key)] = object_to_ast(value)
+          }
+        else
+          object.respond_to?(:to_ast) ? object.to_ast : object
         end
       end
     end
