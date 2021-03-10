@@ -106,8 +106,8 @@ module Dry
         # @return [Transproc::Function]
         #
         # @api public
-        def t(fn, *args)
-          container[fn, *args]
+        def t(fn, *args, **kwargs)
+          container[fn, *args, **kwargs]
         end
       end
     end

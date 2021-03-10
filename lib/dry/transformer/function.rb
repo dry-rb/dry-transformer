@@ -25,6 +25,13 @@ module Dry
       # @api private
       attr_reader :args
 
+      # Additional keyword arguments that will be passed to the wrapped proc
+      #
+      # @return [Hash]
+      #
+      # @api private
+      attr_reader :kwargs
+
       # @!attribute [r] name
       #
       # @return [<type] The name of the function
@@ -36,6 +43,7 @@ module Dry
       def initialize(fn, options = {})
         @fn = fn
         @args = options.fetch(:args, [])
+        @kwargs = options.fetch(:kwargs, {})
         @name = options.fetch(:name, fn)
       end
 
@@ -46,8 +54,8 @@ module Dry
       # @alias []
       #
       # @api public
-      def call(*value)
-        fn.call(*value, *args)
+      def call(*value, **additional_kwargs)
+        fn.call(*value, *args, **(kwargs).merge(additional_kwargs))
       end
       alias_method :[], :call
 
@@ -71,15 +79,15 @@ module Dry
       # @return [Function]
       #
       # @api private
-      def with(*args)
-        self.class.new(fn, name: name, args: args)
+      def with(*args, **additional_kwargs)
+        self.class.new(fn, name: name, args: args, kwargs: kwargs.merge(additional_kwargs))
       end
 
       # @api public
       def ==(other)
         return false unless other.instance_of?(self.class)
 
-        [fn, name, args] == [other.fn, other.name, other.args]
+        [fn, name, args, kwargs] == [other.fn, other.name, other.args, other.kwargs]
       end
       alias_method :eql?, :==
 
@@ -99,7 +107,7 @@ module Dry
       #
       def to_proc
         if !args.empty?
-          proc { |*value| fn.call(*value, *args) }
+          proc { |*value| fn.call(*value, *args, **kwargs) }
         else
           fn.to_proc
         end

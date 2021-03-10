@@ -8,6 +8,10 @@ RSpec.describe Dry::Transformer::Registry do
       def self.prefix(value, prefix)
         "#{prefix}_#{value}"
       end
+
+      def self.trim(value, limit:)
+        value[0..(limit - 1)]
+      end
     end
   end
 
@@ -30,6 +34,16 @@ RSpec.describe Dry::Transformer::Registry do
 
       it "builds a function from a method" do
         expect(transproc["qux"]).to eql "baz_qux"
+      end
+    end
+
+    context "with keyword arguments" do
+      it "passes keywords through" do
+        expect(foo[:trim]["string", limit: 3]).to eql("str")
+      end
+
+      it "works with a transproc approach" do
+        expect(foo[:trim, limit: 2]["string"]).to eql("st")
       end
     end
   end
