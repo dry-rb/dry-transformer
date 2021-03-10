@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "dry/core/equalizer"
+require "dry/equalizer"
 
 RSpec.describe Dry::Transformer::ClassTransformations do
   describe ".constructor_inject" do

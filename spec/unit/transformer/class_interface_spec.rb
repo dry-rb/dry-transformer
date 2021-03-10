@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'ostruct'
-require 'dry/core/equalizer'
+require 'dry/equalizer'
 
 RSpec.describe Dry::Transformer do
   let(:container) { Module.new { extend Dry::Transformer::Registry } }
