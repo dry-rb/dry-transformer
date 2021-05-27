@@ -6,9 +6,10 @@ eval_gemfile "Gemfile.devtools"
 
 gemspec
 
-gem "rake"
-gem "rspec", "~> 3.8"
-gem "dry-equalizer", "~> 0.2"
+group :test do
+  gem "rspec", "~> 3.8"
+  gem "dry-equalizer", "~> 0.2"
+end
 
 group :tools do
   gem "pry"
