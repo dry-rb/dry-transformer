@@ -50,7 +50,7 @@ RSpec.describe Dry::Transformer::Store do
     it "returns false if requested proc is unknown" do
       expect(store.contain?(:bar)).to be false
     end
-  end # describe #fetch
+  end # describe #contain?
 
   describe "#register" do
     subject { new_store }
@@ -73,7 +73,7 @@ RSpec.describe Dry::Transformer::Store do
     end
   end
 
-  describe "#import", :focus do
+  describe "#import" do
     before do
       module Bar
         def self.bar

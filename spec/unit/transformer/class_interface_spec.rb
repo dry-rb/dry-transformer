@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'ostruct'
-require 'dry/core/equalizer'
+require 'dry/equalizer'
 
 RSpec.describe Dry::Transformer do
   let(:container) { Module.new { extend Dry::Transformer::Registry } }
@@ -166,7 +166,7 @@ RSpec.describe Dry::Transformer do
         map_value(:attr, t(:to_symbol))
       end
 
-      expect(transproc.new.transproc[attr: 'abc']).to eq(attr: :abc)
+      expect(transproc.new.transproc[{attr: 'abc'}]).to eq(attr: :abc)
     end
 
     it 'does not affect original transformer' do

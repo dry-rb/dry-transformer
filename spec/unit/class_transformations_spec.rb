@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "dry/core/equalizer"
+require "dry/equalizer"
 
 RSpec.describe Dry::Transformer::ClassTransformations do
   describe ".constructor_inject" do
@@ -39,7 +39,7 @@ RSpec.describe Dry::Transformer::ClassTransformations do
       set_ivars = described_class.t(:set_ivars, klass)
 
       input = { name: "Jane", age: 25 }
-      output = klass.new(input)
+      output = klass.new(**input)
       result = set_ivars[input]
 
       expect(result).to eql(output)
