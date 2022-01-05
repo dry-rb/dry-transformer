@@ -8,7 +8,7 @@
 # dry-transformer [![Join the chat at https://dry-rb.zulipchat.com](https://img.shields.io/badge/dry--rb-join%20chat-%23346b7a.svg)][chat]
 
 [![Gem Version](https://badge.fury.io/rb/dry-transformer.svg)][gem]
-[![CI Status](https://github.com/dry-rb/dry-transformer/workflows/CI/badge.svg)][actions]
+[![CI Status](https://github.com/dry-rb/dry-transformer/workflows/ci/badge.svg)][actions]
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/22edf59617be4aef97cfbe4e1c99f1ce)][codacy]
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/22edf59617be4aef97cfbe4e1c99f1ce)][codacy]
 [![Inline docs](http://inch-ci.org/github/dry-rb/dry-transformer.svg?branch=master)][inchpages]
