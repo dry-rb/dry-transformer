@@ -45,10 +45,10 @@ module Dry
       #
       # @alias :t
       #
-      def [](fn, *args)
+      def [](fn, *args, **kwargs)
         fetched = fetch(fn)
 
-        return Function.new(fetched, args: args, name: fn) unless already_wrapped?(fetched)
+        return Function.new(fetched, args: args, kwargs: kwargs, name: fn) unless already_wrapped?(fetched)
 
         args.empty? ? fetched : fetched.with(*args)
       end
