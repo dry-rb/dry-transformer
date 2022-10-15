@@ -5,4 +5,4 @@ gemspec:
   email: ["piotr.solnica@gmail.com"]
   summary: "Data transformation toolkit"
   runtime_dependencies:
-    - [dry-core, "~> 0.7"]
+    - [dry-core, "~> 0.9", "~> 0.9.0"]
