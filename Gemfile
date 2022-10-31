@@ -7,8 +7,8 @@ eval_gemfile "Gemfile.devtools"
 gemspec
 
 group :test do
+  gem "dry-core", github: "dry-rb/dry-core", branch: "main"
   gem "rspec", "~> 3.8"
-  gem "dry-equalizer", "~> 0.2"
 end
 
 group :tools do

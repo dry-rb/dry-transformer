@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "dry/core"
 require "dry/transformer/version"
 require "dry/transformer/constants"
 require "dry/transformer/function"

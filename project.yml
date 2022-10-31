@@ -4,5 +4,4 @@ gemspec:
   authors: ["Piotr Solnica"]
   email: ["piotr.solnica@gmail.com"]
   summary: "Data transformation toolkit"
-  runtime_dependencies:
-    - [dry-core, "~> 0.9", "~> 0.9.0"]
+  runtime_dependencies: []
