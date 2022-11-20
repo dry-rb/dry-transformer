@@ -11,7 +11,7 @@ group :test do
 end
 
 group :tools do
-  gem "pry"
-  gem "byebug", platform: :mri
   gem "benchmark-ips"
+  gem "byebug", platform: :mri
+  gem "pry"
 end

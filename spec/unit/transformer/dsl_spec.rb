@@ -5,8 +5,8 @@ RSpec.describe Dry::Transformer do
   let(:klass) { Dry::Transformer[container] }
   let(:transformer) { klass.new }
 
-  context 'when invalid method is used' do
-    it 'raises an error on initialization' do
+  context "when invalid method is used" do
+    it "raises an error on initialization" do
       klass.define! do
         not_valid
       end

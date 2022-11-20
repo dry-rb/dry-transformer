@@ -57,7 +57,7 @@ RSpec.describe Dry::Transformer::Function do
         ]
       )
 
-      expect(f4["user_name" => "Jane"]).to eql(details: { name: "Jane" })
+      expect(f4["user_name" => "Jane"]).to eql(details: {name: "Jane"})
     end
 
     it "composes anonymous functions" do
@@ -104,7 +104,7 @@ RSpec.describe Dry::Transformer::Function do
       container.register(:to_symbol, Dry::Transformer::Coercions.t(:to_symbol))
       fn = container.t(:map_array, container.t(:to_symbol))
 
-      expect(fn.call(%w(a b c))).to eql([:a, :b, :c])
+      expect(fn.call(%w[a b c])).to eql([:a, :b, :c])
       expect(fn.to_ast).to eql(
         [
           :map_array, [
@@ -148,7 +148,7 @@ RSpec.describe Dry::Transformer::Function do
       end
 
       it "works fine" do
-        expect(subject.call :foo).to eql("foo")
+        expect(subject.call(:foo)).to eql("foo")
       end
     end
 
@@ -174,7 +174,7 @@ RSpec.describe Dry::Transformer::Function do
       it_behaves_like :providing_a_proc
 
       it "can be applied to collection" do
-        expect([:foo, :bar].map(&source)).to eql(%w(foo bar))
+        expect([:foo, :bar].map(&source)).to eql(%w[foo bar])
       end
     end
 

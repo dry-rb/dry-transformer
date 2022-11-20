@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'ostruct'
+require "ostruct"
 
 RSpec.describe Dry::Transformer do
   let(:container) { Module.new { extend Dry::Transformer::Registry } }
   let(:klass) { Dry::Transformer[container] }
   let(:transformer) { klass.new }
 
-  describe '.import' do
-    it 'allows importing functions into an auto-configured registry' do
+  describe ".import" do
+    it "allows importing functions into an auto-configured registry" do
       klass = Class.new(Dry::Transformer::Pipe) do
         import Dry::Transformer::ArrayTransformations
         import Dry::Transformer::Coercions
@@ -20,12 +20,12 @@ RSpec.describe Dry::Transformer do
 
       transformer = klass.new
 
-      expect(transformer.(['foo', 'bar'])).to eql([:foo, :bar])
+      expect(transformer.(%w[foo bar])).to eql([:foo, :bar])
     end
   end
 
-  describe '.new' do
-    it 'supports arguments' do
+  describe ".new" do
+    it "supports arguments" do
       klass = Class.new(Dry::Transformer::Pipe) do
         import Dry::Transformer::ArrayTransformations
         import Dry::Transformer::Coercions
@@ -49,15 +49,15 @@ RSpec.describe Dry::Transformer do
     end
   end
 
-  describe '.container' do
-    it 'returns the configured container' do
+  describe ".container" do
+    it "returns the configured container" do
       expect(klass.container).to be(container)
     end
 
-    context 'with setter argument' do
+    context "with setter argument" do
       let(:container) { double(:custom_container) }
 
-      it 'sets and returns the container' do
+      it "sets and returns the container" do
         klass.container(container)
 
         expect(klass.container).to be(container)
@@ -65,7 +65,7 @@ RSpec.describe Dry::Transformer do
     end
   end
 
-  describe 'inheritance' do
+  describe "inheritance" do
     let(:container) do
       Module.new do
         extend Dry::Transformer::Registry
@@ -92,42 +92,42 @@ RSpec.describe Dry::Transformer do
       end
     end
 
-    it 'inherits container from superclass' do
+    it "inherits container from superclass" do
       expect(subclass.container).to be(superclass.container)
     end
 
-    it 'inherits transproc from superclass' do
+    it "inherits transproc from superclass" do
       expect(superclass.new.call(2)).to be(3)
       expect(subclass.new.call(2)).to be(6)
     end
   end
 
-  describe '.[]' do
+  describe ".[]" do
     subject(:subclass) { klass[another_container] }
 
-    let(:another_container) { double('Dry::Transformer') }
+    let(:another_container) { double("Dry::Transformer") }
 
-    it 'sets a container' do
+    it "sets a container" do
       expect(subclass.container).to be(another_container)
     end
 
-    it 'returns a class' do
+    it "returns a class" do
       expect(subclass).to be_a(Class)
     end
 
-    it 'creates a subclass of Transformer' do
+    it "creates a subclass of Transformer" do
       expect(subclass).to be < Dry::Transformer::Pipe
     end
 
-    it 'does not change super class' do
+    it "does not change super class" do
       expect(klass.container).to be(container)
     end
 
-    it 'does not inherit transproc' do
+    it "does not inherit transproc" do
       expect(klass[container].new.transproc).to be_nil
     end
 
-    context 'with predefined transformer' do
+    context "with predefined transformer" do
       let(:klass) do
         Class.new(Dry::Transformer[container]) do
           container.import Dry::Transformer::Coercions
@@ -145,7 +145,7 @@ RSpec.describe Dry::Transformer do
     end
   end
 
-  describe '.define!' do
+  describe ".define!" do
     let(:container) do
       Module.new do
         extend Dry::Transformer::Registry
@@ -160,15 +160,15 @@ RSpec.describe Dry::Transformer do
 
     let(:klass) { Dry::Transformer[container] }
 
-    it 'defines anonymous transproc' do
+    it "defines anonymous transproc" do
       transproc = klass.define! do
         map_value(:attr, t(:to_symbol))
       end
 
-      expect(transproc.new.transproc[attr: 'abc']).to eq(attr: :abc)
+      expect(transproc.new.transproc[attr: "abc"]).to eq(attr: :abc)
     end
 
-    it 'does not affect original transformer' do
+    it "does not affect original transformer" do
       Class.new(klass).define! do
         map_value(:attr, :to_sym.to_proc)
       end
@@ -176,7 +176,7 @@ RSpec.describe Dry::Transformer do
       expect(klass.new.transproc).to be_nil
     end
 
-    context 'with custom container' do
+    context "with custom container" do
       let(:container) do
         Module.new do
           extend Dry::Transformer::Registry
@@ -189,7 +189,7 @@ RSpec.describe Dry::Transformer do
 
       let(:klass) { described_class[container] }
 
-      it 'uses a container from the transformer' do
+      it "uses a container from the transformer" do
         transproc = klass.define! do
           arbitrary ->(v) { v + 1 }
         end.new
@@ -198,7 +198,7 @@ RSpec.describe Dry::Transformer do
       end
     end
 
-    context 'with predefined transformer' do
+    context "with predefined transformer" do
       let(:klass) do
         Class.new(described_class[container]) do
           define! do
@@ -207,7 +207,7 @@ RSpec.describe Dry::Transformer do
         end
       end
 
-      it 'builds transformation from the DSL definition' do
+      it "builds transformation from the DSL definition" do
         transproc = klass.new
 
         expect(transproc.call(attr: 2)).to eql(attr: 3)
@@ -215,7 +215,7 @@ RSpec.describe Dry::Transformer do
     end
   end
 
-  describe '.t' do
+  describe ".t" do
     subject(:klass) { Dry::Transformer[container] }
 
     let(:container) do
@@ -231,30 +231,30 @@ RSpec.describe Dry::Transformer do
       end
     end
 
-    it 'returns a registed function' do
-      expect(klass.t(:custom, '_bar')).to eql(container[:custom, '_bar'])
+    it "returns a registed function" do
+      expect(klass.t(:custom, "_bar")).to eql(container[:custom, "_bar"])
     end
 
-    it 'is useful in DSL' do
+    it "is useful in DSL" do
       transproc = Class.new(klass).define! do
-        map_value :a, t(:custom, '_bar')
+        map_value :a, t(:custom, "_bar")
       end.new
 
-      expect(transproc.call(a: 'foo')).to eq(a: 'foo_bar')
+      expect(transproc.call(a: "foo")).to eq(a: "foo_bar")
     end
 
-    it 'works in nested block' do
+    it "works in nested block" do
       transproc = Class.new(klass).define! do
         map_values do
-          is String, t(:custom, '_bar')
+          is String, t(:custom, "_bar")
         end
       end.new
 
-      expect(transproc.call(a: 'foo', b: :symbol)).to eq(a: 'foo_bar', b: :symbol)
+      expect(transproc.call(a: "foo", b: :symbol)).to eq(a: "foo_bar", b: :symbol)
     end
   end
 
-  describe '#call' do
+  describe "#call" do
     let(:container) do
       Module.new do
         extend Dry::Transformer::Registry
@@ -285,21 +285,21 @@ RSpec.describe Dry::Transformer do
 
     let(:input) do
       [
-        { 'user_name' => 'Jane',
-          'city' => 'NYC',
-          'street' => 'Street 1',
-          'zipcode' => '123' }
+        {"user_name" => "Jane",
+         "city" => "NYC",
+         "street" => "Street 1",
+         "zipcode" => "123"}
       ]
     end
 
     let(:expected_output) do
       [
         Test::User.new(
-          name: 'Jane',
+          name: "Jane",
           address: Test::Address.new(
-            city: 'NYC',
-            street: 'Street 1',
-            zipcode: '123'
+            city: "NYC",
+            street: "Street 1",
+            zipcode: "123"
           )
         )
       ]
@@ -317,15 +317,15 @@ RSpec.describe Dry::Transformer do
       end
     end
 
-    it 'transforms input' do
+    it "transforms input" do
       expect(transformer.(input)).to eql(expected_output)
     end
 
-    context 'with custom registry' do
+    context "with custom registry" do
       let(:klass) do
         Class.new(Dry::Transformer[registry]) do
           define! do
-            append ' is awesome'
+            append " is awesome"
           end
         end
       end
@@ -340,8 +340,8 @@ RSpec.describe Dry::Transformer do
         end
       end
 
-      it 'uses custom functions' do
-        expect(transformer.('transproc')).to eql('transproc is awesome')
+      it "uses custom functions" do
+        expect(transformer.("transproc")).to eql("transproc is awesome")
       end
     end
   end

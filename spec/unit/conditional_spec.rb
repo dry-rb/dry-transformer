@@ -39,7 +39,7 @@ RSpec.describe Dry::Transformer::Conditional do
 
     context "when predicate returns falsey value" do
       it "returns the original value" do
-        input = { "foo" => "bar" }
+        input = {"foo" => "bar"}
 
         expect(fn[input]).to eql("foo" => "bar")
       end

@@ -103,7 +103,7 @@ RSpec.describe Dry::Transformer::Registry do
 
       fn = foo[:map_array, ->(value) { value.to_sym }]
 
-      expect(fn.call(%w(a b c))).to eq([:a, :b, :c])
+      expect(fn.call(%w[a b c])).to eq([:a, :b, :c])
     end
 
     it "registers and fetches composite" do

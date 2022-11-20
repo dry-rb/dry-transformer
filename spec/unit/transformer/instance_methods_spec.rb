@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Dry::Transformer, 'instance methods' do
+RSpec.describe Dry::Transformer, "instance methods" do
   subject(:transformer) do
     Class.new(Dry::Transformer[registry]) do
       define! do
@@ -21,7 +21,7 @@ RSpec.describe Dry::Transformer, 'instance methods' do
     end
   end
 
-  it 'registers a new transformation function' do
+  it "registers a new transformation function" do
     expect(transformer.call(%w[foo bar])).to eql(%w[FOO BAR])
   end
 end

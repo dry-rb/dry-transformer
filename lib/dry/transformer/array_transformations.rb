@@ -159,7 +159,7 @@ module Dry
       #
       # @api public
       def self.insert_key(array, key)
-        map_array(array, ->(v) { { key => v } })
+        map_array(array, ->(v) { {key => v} })
       end
 
       # Adds missing keys with nil value to all tuples in array

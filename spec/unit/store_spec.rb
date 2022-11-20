@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Dry::Transformer::Store do
-  let(:store) { described_class.new methods      }
-  let(:methods) { { foo: instance_double(Proc) } }
+  let(:store) { described_class.new methods }
+  let(:methods) { {foo: instance_double(Proc)} }
 
   describe ".new" do
     it "is immutable" do
@@ -192,7 +192,7 @@ RSpec.describe Dry::Transformer::Store do
     end
 
     after do
-      %w(Bar Baz Qux).each { |name| Object.send :remove_const, name }
+      %w[Bar Baz Qux].each { |name| Object.send :remove_const, name }
     end
   end # describe #import
 end # describe Dry::Transformer::Store

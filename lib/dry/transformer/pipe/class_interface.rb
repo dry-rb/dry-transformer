@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'dry/transformer/pipe/dsl'
+require "dry/transformer/pipe/dsl"
 
 module Dry
   module Transformer
@@ -36,7 +36,7 @@ module Dry
 
           subclass.container(@container) if defined?(@container)
 
-          subclass.instance_variable_set('@dsl', dsl.dup) if dsl
+          subclass.instance_variable_set("@dsl", dsl.dup) if dsl
         end
 
         # Get or set the container to resolve transprocs from.
@@ -80,7 +80,7 @@ module Dry
         # @api public
         def new(*)
           super.tap do |transformer|
-            transformer.instance_variable_set('@transproc', dsl.(transformer)) if dsl
+            transformer.instance_variable_set("@transproc", dsl.(transformer)) if dsl
           end
         end
         ruby2_keywords(:new) if respond_to?(:ruby2_keywords, true)

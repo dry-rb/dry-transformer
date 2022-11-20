@@ -277,7 +277,7 @@ module Dry
         return source_hash unless source_hash[root]
 
         add_prefix = lambda do |key|
-          combined = [root, key].join('_')
+          combined = [root, key].join("_")
           root.is_a?(::Symbol) ? combined.to_sym : combined
         end
 

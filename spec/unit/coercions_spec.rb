@@ -120,10 +120,10 @@ RSpec.describe Dry::Transformer::Coercions do
     end
 
     context "array of tuples" do
-      let(:input) { [:foo, { bar: :BAZ }, :qux] }
+      let(:input) { [:foo, {bar: :BAZ}, :qux] }
 
       it "returns an array with tuples only" do
-        output = [{ bar: :BAZ }]
+        output = [{bar: :BAZ}]
 
         expect(to_tuples[input]).to eql(output)
       end

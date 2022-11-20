@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'date'
-require 'time'
-require 'bigdecimal'
-require 'bigdecimal/util'
+require "date"
+require "time"
+require "bigdecimal"
+require "bigdecimal/util"
 
 module Dry
   module Transformer
@@ -13,8 +13,8 @@ module Dry
     module Coercions
       extend Registry
 
-      TRUE_VALUES = [true, 1, '1', 'on', 't', 'true', 'y', 'yes'].freeze
-      FALSE_VALUES = [false, 0, '0', 'off', 'f', 'false', 'n', 'no', nil].freeze
+      TRUE_VALUES = [true, 1, "1", "on", "t", "true", "y", "yes"].freeze
+      FALSE_VALUES = [false, 0, "0", "off", "f", "false", "n", "no", nil].freeze
 
       BOOLEAN_MAP = Hash[
         TRUE_VALUES.product([true]) + FALSE_VALUES.product([false])

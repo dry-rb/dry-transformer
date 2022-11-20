@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'dry/transformer/compiler'
+require "dry/transformer/compiler"
 
 module Dry
   module Transformer

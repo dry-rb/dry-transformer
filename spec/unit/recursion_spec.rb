@@ -9,7 +9,7 @@ RSpec.describe Dry::Transformer::Recursion do
         "foo" => "bar",
         "bar" => {
           "foo" => "bar",
-          "bar" => %w(foo bar baz),
+          "bar" => %w[foo bar baz],
           "baz" => "foo"
         },
         "baz" => "bar"
@@ -23,7 +23,7 @@ RSpec.describe Dry::Transformer::Recursion do
         "foo" => "bar",
         "bar" => {
           "foo" => "bar",
-          "bar" => %w(foo bar)
+          "bar" => %w[foo bar]
         }
       }
     end
@@ -83,7 +83,7 @@ RSpec.describe Dry::Transformer::Recursion do
         [
           "foo",
           "bar",
-          %w(foo bar)
+          %w[foo bar]
         ]
       ]
     end
