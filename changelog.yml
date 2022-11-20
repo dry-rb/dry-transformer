@@ -6,6 +6,7 @@
   added:
   changed:
   - 'Use Zeitwerk to auto-load the gem (via #14) (@solnic)'
+  - 'Dropped dependency on dry-core (via #14) (@solnic)'
 - version: 0.1.1
   date: '2020-01-14'
   fixed:
