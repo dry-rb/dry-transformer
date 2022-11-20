@@ -1,9 +1,9 @@
 ---
-- version: unreleased
-  summary: 
-  date: 
-  fixed: 
-  added: 
+- version: 1.0.0
+  summary:
+  date: 2022-11-20
+  fixed:
+  added:
   changed:
   - 'Use Zeitwerk to auto-load the gem (via #14) (@solnic)'
 - version: 0.1.1
