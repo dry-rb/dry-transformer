@@ -66,11 +66,11 @@ module Dry
         hash.each_with_object({}) do |(key, value), output|
           output[key.to_sym] =
             case value
-            when Hash
+            when ::Hash
               deep_symbolize_keys(value)
-            when Array
+            when ::Array
               value.map { |item|
-                item.is_a?(Hash) ? deep_symbolize_keys(item) : item
+                item.is_a?(::Hash) ? deep_symbolize_keys(item) : item
               }
             else
               value
@@ -110,9 +110,9 @@ module Dry
         hash.each_with_object({}) do |(key, value), output|
           output[key.to_s] =
             case value
-            when Hash
+            when ::Hash
               deep_stringify_keys(value)
-            when Array
+            when ::Array
               value.map { |item|
                 item.is_a?(Hash) ? deep_stringify_keys(item) : item
               }
@@ -387,9 +387,9 @@ module Dry
               else
                 value
               end
-            when Hash
+            when ::Hash
               eval_values(value, args, filters)
-            when Array
+            when ::Array
               value.map { |item|
                 item.is_a?(Hash) ? eval_values(item, args, filters) : item
               }
