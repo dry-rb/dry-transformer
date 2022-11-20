@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'dry/transformer/coercions'
-require 'dry/transformer/hash'
-require 'dry/transformer/array/combine'
-
 module Dry
   module Transformer
     # Transformation functions for Array objects

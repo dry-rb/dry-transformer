@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dry/transformer/composite'
-
 module Dry
   module Transformer
     # Transformation proc wrapper allowing composition of multiple procs into

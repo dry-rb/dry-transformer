@@ -1,17 +1,9 @@
 # frozen_string_literal: true
 
-require "dry/core"
-require "dry/transformer/version"
-require "dry/transformer/constants"
-require "dry/transformer/function"
-require "dry/transformer/error"
-require "dry/transformer/store"
-require "dry/transformer/registry"
+require "zeitwerk"
 
-require "dry/transformer/array"
-require "dry/transformer/hash"
-
-require "dry/transformer/pipe"
+require_relative "transformer/constants"
+require_relative "transformer/error"
 
 module Dry
   module Transformer
@@ -20,5 +12,22 @@ module Dry
     def self.[](registry)
       Pipe[registry]
     end
+
+    # @api private
+    def self.loader
+      @loader ||= Zeitwerk::Loader.new.tap do |loader|
+        root = File.expand_path("..", __dir__)
+        loader.tag = "dry-transformer"
+        loader.inflector = Zeitwerk::GemInflector.new("#{root}/dry-transformer.rb")
+        loader.push_dir(root)
+        loader.ignore(
+          "#{root}/dry-transformer.rb",
+          "#{root}/dry/transformer/{constants,error,version}.rb"
+        )
+        loader.inflector.inflect("dsl" => "DSL")
+      end
+    end
+
+    loader.setup
   end
 end
