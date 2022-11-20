@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
 
   # to update dependencies edit project.yml
   spec.add_runtime_dependency "zeitwerk", "~> 2.6"
+
 end
