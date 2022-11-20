@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dry/transformer/coercions'
-
 module Dry
   module Transformer
     # Transformation functions for Hash objects

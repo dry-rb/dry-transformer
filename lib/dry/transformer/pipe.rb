@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dry/transformer/pipe/class_interface'
-
 module Dry
   module Transformer
     # Pipe class for defining transprocs with a class DSL.

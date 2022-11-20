@@ -5,7 +5,8 @@ require_relative "support/coverage"
 begin
   require "byebug"
 rescue LoadError; end
-require "dry/transformer/all"
+
+require "dry/transformer"
 require "pathname"
 
 root = Pathname(__FILE__).dirname

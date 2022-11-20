@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.7.0"
 
   # to update dependencies edit project.yml
-
+  spec.add_runtime_dependency "zeitwerk", "~> 2.6"
 end

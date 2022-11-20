@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dry/transformer/conditional'
-
 module Dry
   module Transformer
     # Recursive transformation functions
