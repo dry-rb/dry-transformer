@@ -6,6 +6,7 @@
 ### Changed
 
 - Use Zeitwerk to auto-load the gem (via #14) (@solnic)
+- Dropped dependency on dry-core (via #14) (@solnic)
 
 [Compare v0.1.1...v1.0.0](https://github.com/dry-rb/dry-transformer/compare/v0.1.1...v1.0.0)
 
