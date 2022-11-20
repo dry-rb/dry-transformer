@@ -4,4 +4,6 @@ gemspec:
   authors: ["Piotr Solnica"]
   email: ["piotr.solnica@gmail.com"]
   summary: "Data transformation toolkit"
-  runtime_dependencies: []
+  runtime_dependencies:
+    - ["zeitwerk", "~> 2.6"]
+
