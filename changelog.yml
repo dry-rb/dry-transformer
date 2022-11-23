@@ -1,7 +1,7 @@
 ---
 - version: 1.0.1
   summary:
-  date:
+  date: 2022-11-23
   fixed:
     - "Auto-loading issues for array transformations (@flash-gordon)"
 - version: 1.0.0
