@@ -12,6 +12,4 @@ end
 
 group :tools do
   gem "benchmark-ips"
-  gem "byebug", platform: :mri
-  gem "pry"
 end
