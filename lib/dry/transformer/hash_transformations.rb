@@ -5,7 +5,7 @@ module Dry
     # Transformation functions for Hash objects
     #
     # @example
-    #   require 'dry/transformer/hash'
+    #   require 'dry/transformer/hash_transformations'
     #
     #   include Dry::Transformer::Helper
     #
