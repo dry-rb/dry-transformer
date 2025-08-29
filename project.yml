@@ -5,5 +5,5 @@ gemspec:
   email: ["piotr.solnica@gmail.com"]
   summary: "Data transformation toolkit"
   runtime_dependencies:
+    - ["bigdecimal"]
     - ["zeitwerk", "~> 2.6"]
-
