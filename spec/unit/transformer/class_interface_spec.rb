@@ -35,6 +35,7 @@ RSpec.describe Dry::Transformer do
         end
 
         def initialize(good)
+          super()
           @good = good
         end
 

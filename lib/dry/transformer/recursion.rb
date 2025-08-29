@@ -27,7 +27,9 @@ module Dry
       # Recursively apply the provided transformation function to an enumerable
       #
       # @example
-      #   Dry::Transformer(:recursion, Dry::Transformer(:is, ::Hash, Dry::Transformer(:symbolize_keys)))[
+      #   Dry::Transformer(
+      #     :recursion, Dry::Transformer(:is, ::Hash, Dry::Transformer(:symbolize_keys))
+      #   )[
       #     {
       #       'id' => 1,
       #       'name' => 'Jane',

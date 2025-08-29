@@ -11,5 +11,6 @@ group :test do
 end
 
 group :tools do
+  gem "base64"
   gem "benchmark-ips"
 end
