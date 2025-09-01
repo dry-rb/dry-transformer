@@ -35,7 +35,8 @@ module Dry
         !fn[value]
       end
 
-      # Apply the transformation function to subject if the predicate returns true, or return un-modified
+      # Apply the transformation function to subject if the predicate returns true,
+      # or return un-modified
       #
       # @example
       #   [2, 'Jane'].map do |subject|

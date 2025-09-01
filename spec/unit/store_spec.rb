@@ -12,7 +12,7 @@ RSpec.describe Dry::Transformer::Store do
     it "does not freeze the source hash" do
       expect { store }.not_to change { methods.frozen? }
     end
-  end # describe .new
+  end
 
   describe "#methods" do
     it "returns the hash from the initializer" do
@@ -26,7 +26,7 @@ RSpec.describe Dry::Transformer::Store do
     it "is immutable" do
       expect(store.methods).to be_frozen
     end
-  end # describe #methods
+  end
 
   describe "#fetch" do
     it "returns a registered proc" do
@@ -40,7 +40,7 @@ RSpec.describe Dry::Transformer::Store do
     it "raises KeyError if requested proc is unknown" do
       expect { store.fetch(:bar) }.to raise_error KeyError
     end
-  end # describe #fetch
+  end
 
   describe "#contain?" do
     it "returns true for registered proc" do
@@ -50,7 +50,7 @@ RSpec.describe Dry::Transformer::Store do
     it "returns false if requested proc is unknown" do
       expect(store.contain?(:bar)).to be false
     end
-  end # describe #fetch
+  end
 
   describe "#register" do
     subject { new_store }
@@ -194,5 +194,5 @@ RSpec.describe Dry::Transformer::Store do
     after do
       %w[Bar Baz Qux].each { |name| Object.send :remove_const, name }
     end
-  end # describe #import
-end # describe Dry::Transformer::Store
+  end
+end

@@ -15,6 +15,7 @@ module Dry
     #   # => {:address => {:street => "Street 1", :zipcode => "123"}}
     #
     # @api public
+    # rubocop:disable Metrics/ModuleLength
     module HashTransformations
       extend Registry
 
@@ -260,7 +261,9 @@ module Dry
       # Collapse a nested hash from a specified key
       #
       # @example
-      #   Dry::Transformer(:unwrap, :address, [:street, :zipcode])[address: { street: 'Street', zipcode: '123' }]
+      #   Dry::Transformer(
+      #     :unwrap, :address, [:street, :zipcode]
+      #   )[address: { street: 'Street', zipcode: '123' }]
       #   # => {street: "Street", zipcode: "123"}
       #
       # @param [Hash] source_hash
@@ -273,6 +276,7 @@ module Dry
       # @return [Hash]
       #
       # @api public
+      # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
       def self.unwrap(source_hash, root, selected = nil, prefix: false)
         return source_hash unless source_hash[root]
 
@@ -292,6 +296,7 @@ module Dry
           hash.delete(root) if nested_hash.empty? && !nested_contains_root_key
         end
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity
 
       # Folds array of tuples to array of values from a specified key
       #
@@ -377,6 +382,7 @@ module Dry
       # @param [Array] filters A list of attribute names that should be evaluated
       #
       # @api public
+      # rubocop:disable Metrics/PerceivedComplexity
       def self.eval_values(hash, args, filters = [])
         hash.each_with_object({}) do |(key, value), output|
           output[key] =
@@ -398,6 +404,7 @@ module Dry
             end
         end
       end
+      # rubocop:enable Metrics/PerceivedComplexity
 
       # Merge a hash recursively
       #
@@ -427,4 +434,5 @@ module Dry
       end
     end
   end
+  # rubocop:enable Metrics/ModuleLength
 end
