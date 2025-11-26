@@ -7,6 +7,12 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ## [Unreleased]
 
+## [1.1.0] - unreleased
+
+### Added
+
+- Fixed using `prefix` option in `Dry::Transformer::HashTransformations.unwrap` in DSL (@flash-gordon)
+
 
 ## [1.0.1] - 2022-11-23
 
