@@ -8,6 +8,7 @@ rescue LoadError; end
 
 require "dry/transformer"
 require "pathname"
+require "ostruct"
 
 root = Pathname(__FILE__).dirname
 Dir[root.join("support/*.rb").to_s].each { |f| require f }
