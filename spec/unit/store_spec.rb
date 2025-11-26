@@ -73,7 +73,7 @@ RSpec.describe Dry::Transformer::Store do
     end
   end
 
-  describe "#import", :focus do
+  describe "#import" do
     before do
       module Bar
         def self.bar
