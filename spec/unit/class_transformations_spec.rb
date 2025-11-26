@@ -3,7 +3,7 @@
 RSpec.describe Dry::Transformer::ClassTransformations do
   describe ".constructor_inject" do
     let(:klass) do
-      Struct.new(:name, :age) { include Dry::Equalizer.new(:name, :age) }
+      Struct.new(:name, :age) { include Dry::Core::Equalizer.new(:name, :age) }
     end
 
     it "returns a new object initialized with the given arguments" do
@@ -21,7 +21,7 @@ RSpec.describe Dry::Transformer::ClassTransformations do
   describe ".set_ivars" do
     let(:klass) do
       Class.new do
-        include Dry::Equalizer.new(:name, :age)
+        include Dry::Core::Equalizer.new(:name, :age)
 
         attr_reader :name, :age, :test
 
@@ -37,7 +37,7 @@ RSpec.describe Dry::Transformer::ClassTransformations do
       set_ivars = described_class.t(:set_ivars, klass)
 
       input = {name: "Jane", age: 25}
-      output = klass.new(input)
+      output = klass.new(**input)
       result = set_ivars[input]
 
       expect(result).to eql(output)

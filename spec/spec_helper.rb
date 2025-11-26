@@ -7,6 +7,7 @@ begin
 rescue LoadError; end
 
 require "dry/transformer"
+require "dry/core"
 require "pathname"
 require "ostruct"
 

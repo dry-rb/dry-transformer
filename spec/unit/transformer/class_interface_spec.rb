@@ -22,6 +22,20 @@ RSpec.describe Dry::Transformer do
 
       expect(transformer.(%w[foo bar])).to eql([:foo, :bar])
     end
+
+    it "supports importing functions with options" do
+      klass = Class.new(Dry::Transformer::Pipe) do
+        import Dry::Transformer::HashTransformations
+
+        define! do
+          unwrap :foo, [:bar], prefix: true
+        end
+      end
+
+      transformer = klass.new
+
+      expect(transformer.({ foo: { bar: "baz" } })).to eql({ foo_bar: "baz" })
+    end
   end
 
   describe ".new" do
@@ -309,11 +323,11 @@ RSpec.describe Dry::Transformer do
     before do
       module Test
         class User < OpenStruct
-          include Dry::Equalizer(:name, :address)
+          include Dry::Core::Equalizer(:name, :address)
         end
 
         class Address < OpenStruct
-          include Dry::Equalizer(:city, :street, :zipcode)
+          include Dry::Core::Equalizer(:city, :street, :zipcode)
         end
       end
     end

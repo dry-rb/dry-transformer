@@ -9,6 +9,7 @@ gemspec
 group :test do
   gem "rspec", "~> 3.8"
   gem "ostruct"
+  gem "dry-core", "~> 1.0"
 end
 
 group :tools do

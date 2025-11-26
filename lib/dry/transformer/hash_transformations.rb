@@ -19,6 +19,12 @@ module Dry
     module HashTransformations
       extend Registry
 
+      # @api private
+      Undefined = Object.new.freeze
+
+      # @api private
+      EMPTY_HASH = {}.freeze
+
       # Map all keys in a hash with the provided transformation function
       #
       # @example
@@ -277,8 +283,11 @@ module Dry
       #
       # @api public
       # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
-      def self.unwrap(source_hash, root, selected = nil, prefix: false)
+      def self.unwrap(source_hash, root, selected = nil, options = Undefined)
         return source_hash unless source_hash[root]
+        selected, options = nil, selected if options.equal?(Undefined) && selected.is_a?(::Hash)
+        options = EMPTY_HASH if options.equal?(Undefined)
+        prefix = options.fetch(:prefix, false)
 
         add_prefix = lambda do |key|
           combined = [root, key].join("_")
