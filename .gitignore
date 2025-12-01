@@ -8,9 +8,9 @@
 /pkg/
 /spec/reports/
 /tmp/
+/*.rubocop-*
 *.bundle
 *.so
 *.o
 *.a
 mkmf.log
-

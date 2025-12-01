@@ -285,6 +285,7 @@ module Dry
       # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
       def self.unwrap(source_hash, root, selected = nil, options = Undefined)
         return source_hash unless source_hash[root]
+
         selected, options = nil, selected if options.equal?(Undefined) && selected.is_a?(::Hash)
         options = EMPTY_HASH if options.equal?(Undefined)
         prefix = options.fetch(:prefix, false)

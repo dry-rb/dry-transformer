@@ -34,7 +34,7 @@ RSpec.describe Dry::Transformer do
 
       transformer = klass.new
 
-      expect(transformer.({ foo: { bar: "baz" } })).to eql({ foo_bar: "baz" })
+      expect(transformer.({foo: {bar: "baz"}})).to eql({foo_bar: "baz"})
     end
   end
 
