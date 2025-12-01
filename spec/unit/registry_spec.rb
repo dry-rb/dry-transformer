@@ -17,7 +17,7 @@ RSpec.describe Dry::Transformer::Registry do
   describe ".[]" do
     subject(:transproc) { foo[fn, "baz"] }
 
-    context "from a method" do
+    context "from a method", :focus do
       let(:fn) { :prefix }
 
       it "builds a function from a method" do

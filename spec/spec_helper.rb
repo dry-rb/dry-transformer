@@ -26,4 +26,10 @@ RSpec.configure do |config|
   config.after do
     Test.remove_constants
   end
+
+  if ENV['CI']
+    config.before(:each, :focus) do
+      raise StandardError, "You've committed a focused spec!"
+    end
+  end
 end
