@@ -7,7 +7,7 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ## [Unreleased]
 
-## [1.1.0] - unreleased
+## [1.1.0] - 2025-12-03
 
 ### Added
 
