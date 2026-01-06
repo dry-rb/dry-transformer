@@ -15,7 +15,6 @@ module Dry
     #   # => {:address => {:street => "Street 1", :zipcode => "123"}}
     #
     # @api public
-    # rubocop:disable Metrics/ModuleLength
     module HashTransformations
       extend Registry
 
