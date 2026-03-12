@@ -186,11 +186,7 @@ RSpec.describe Dry::Transformer::Store do
       end
 
       it "skips Dry::Transformer::Registry singleton methods" do
-        # In JRuby versions up to 10.0.3.0 refine method of Module class was incorrectly
-        # marked as public, adding to the list of methods returned by subject.method.keys.
-        # This should be fixed in JRuby 10.0.4.0 - then this special handling could be removed.
-        extra_methods = RUBY_ENGINE == "jruby" ? [:refine] : []
-        expect(subject.methods.keys).to contain_exactly(*([:foo, :bar, :baz, :qux] + extra_methods))
+        expect(subject.methods.keys).to contain_exactly(:foo, :bar, :baz, :qux)
       end
     end
 
