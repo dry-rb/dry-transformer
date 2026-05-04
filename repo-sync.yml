@@ -12,5 +12,5 @@ gemspec:
     - rake
     - rspec
   runtime_dependencies:
-    - bigdecimal
+    - [bigdecimal]
     - [zeitwerk, "~> 2.6"]
