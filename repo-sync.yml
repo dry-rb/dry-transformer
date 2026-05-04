@@ -7,7 +7,6 @@ gemspec:
   email: ["info@hanakai.org"]
   summary: "Data transformation toolkit"
   homepage: "https://dry-rb.org/gems/dry-transformer"
-  required_ruby_version: ">= 3.1.0"
   development_dependencies:
     - bundler
     - rake
