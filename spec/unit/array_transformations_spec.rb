@@ -164,8 +164,8 @@ RSpec.describe Dry::Transformer::ArrayTransformations do
 
     it "ingnores old values except for array of tuples" do
       input = [
-        {name: "Jane", title: "One",   tasks: [{priority: 1}, :wrong]},
-        {name: "Jane", title: "Two",   tasks: :wrong}
+        {name: "Jane", title: "One", tasks: [{priority: 1}, :wrong]},
+        {name: "Jane", title: "Two", tasks: :wrong}
       ]
       output = [
         {
