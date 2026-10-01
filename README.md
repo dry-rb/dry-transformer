@@ -2,7 +2,7 @@
 
 [actions]: https://github.com/dry-rb/dry-transformer/actions
 [chat]: https://discord.gg/naQApPAsZB
-[forum]: https://discourse.hanamirb.org
+[forum]: https://discourse.hanakai.org
 [rubygem]: https://rubygems.org/gems/dry-transformer
 
 # dry-transformer [![Gem Version](https://badge.fury.io/rb/dry-transformer.svg)][rubygem] [![CI Status](https://github.com/dry-rb/dry-transformer/workflows/CI/badge.svg)][actions]
